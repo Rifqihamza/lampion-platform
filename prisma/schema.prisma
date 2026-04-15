@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum MilestoneType {
+  VIDEO
+  ARTICLE
+  PROJECT
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String?
+  image     String?
+  createdAt DateTime @default(now())
+
+  progress UserProgress[]
+  chats    AIChatHistory[]
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  roadmaps Roadmap[]
+}
+
+model Roadmap {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  description String
+  difficulty  Difficulty
+  duration    String
+  categoryId  String
+
+  category   Category    @relation(fields: [categoryId], references: [id])
+  milestones Milestone[]
+
+  createdAt DateTime @default(now())
+}
+
+model Milestone {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  order       Int
+  type        MilestoneType
+  contentUrl  String
+  roadmapId   String
+
+  roadmap  Roadmap        @relation(fields: [roadmapId], references: [id])
+  progress UserProgress[]
+
+  createdAt DateTime @default(now())
+}
+
+model UserProgress {
+  id          String  @id @default(cuid())
+  userId      String
+  milestoneId String
+  completed   Boolean @default(false)
+
+  user      User      @relation(fields: [userId], references: [id])
+  milestone Milestone @relation(fields: [milestoneId], references: [id])
+
+  @@unique([userId, milestoneId])
+}
+
+model AIChatHistory {
+  id          String   @id @default(cuid())
+  userId      String
+  milestoneId String?
+  question    String
+  answer      String
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
