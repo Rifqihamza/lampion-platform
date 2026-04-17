@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Provider from "@/components/provider/Provider";
+import { ThemeProvider } from "@/components/provider/theme-provider";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: "Lampion",
@@ -19,11 +20,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("antialiased", "font-sans", geist.variable)}
+      className={cn("antialiased", "font-sans", geist.variable)} suppressHydrationWarning
     >
       <body>
         <Provider>
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </Provider>
       </body>
     </html>

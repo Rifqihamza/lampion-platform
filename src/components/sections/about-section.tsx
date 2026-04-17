@@ -3,7 +3,7 @@
 import MagicBento from "../animation/magic-bento"
 export default function AboutSection() {
     return (
-        <div id="about-section">
+        <div id="about-section" className="w-full h-dvh flex items-center">
             <MagicBento
                 textAutoHide={true}
                 enableStars
@@ -14,7 +14,7 @@ export default function AboutSection() {
                 clickEffect
                 spotlightRadius={400}
                 particleCount={12}
-                glowColor="234, 159, 6"
+                glowColor="231,	149, 22"
                 disableAnimations={false}
             />
         </div>

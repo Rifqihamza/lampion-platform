@@ -1,20 +1,25 @@
-export type Difficulty = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
-
-export interface Milestone {
+export interface ExploreCategory {
     id: string;
-    title: string;
-    description: string;
-    order: number;
-    type: "VIDEO" | "ARTICLE" | "PROJECT";
-    contentUrl: string;
+    name: string;
+    slug: string;
 }
 
-export interface Roadmap {
+export type Difficulty = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+
+export interface ExploreMilestone {
+    id: string;
+    title: string;
+    order: number;
+}
+
+export interface ExploreRoadmap {
     id: string;
     title: string;
     slug: string;
     description: string;
     difficulty: Difficulty;
     duration: string;
-    milestones: Milestone[];
+
+    category: ExploreCategory;
+    milestones: ExploreMilestone[];
 }

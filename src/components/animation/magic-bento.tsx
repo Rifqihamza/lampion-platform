@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 
@@ -26,51 +24,49 @@ export interface BentoProps {
     enableMagnetism?: boolean;
 }
 
-// --- WARNA GOLD LENTERA (Sesuai tema globals.css kamu) ---
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
-const DEFAULT_GLOW_COLOR = '234, 179, 8'; // Gold Lentera RGB
+const DEFAULT_GLOW_COLOR = '132, 0, 255';
 const MOBILE_BREAKPOINT = 768;
 
 const cardData: BentoCardProps[] = [
     {
-        color: '#060010aa', // Dark Background
+        color: '#5a10104d', // Dark Background
         title: 'Roadmap Terstruktur',
         description: 'Navigasi belajar dari nol hingga mahir tanpa tersesat di lautan informasi.',
         label: 'Navigation'
     },
     {
-        color: '#060010aa',
+        color: '#5a10104d',
         title: 'Pendidikan Inklusif',
         description: 'Akses kurasi materi berkualitas secara gratis untuk semua kalangan.',
         label: 'Inclusivity'
     },
     {
-        color: '#060010aa',
+        color: '#5a10104d',
         title: 'Modern Tech Stack',
         description: 'Dibangun dengan Next.js 16, Tailwind v4, dan performa server lokal yang ngebut.',
         label: 'Technology'
     },
     {
-        color: '#060010aa',
+        color: '#5a10104d',
         title: 'Progress Tracking',
         description: 'Pantau sejauh mana perkembangan skill kamu dengan dashboard yang intuitif.',
         label: 'Self-Growth'
     },
     {
-        color: '#060010aa',
+        color: '#5a10104d',
         title: 'Materi Terkurasi',
         description: 'Hanya menyajikan sumber belajar terbaik dari berbagai platform edukasi dunia.',
         label: 'High Quality'
     },
     {
-        color: '#060010aa',
+        color: '#5a10104d',
         title: 'IOFest 2026',
         description: 'Project inovasi yang dikembangkan khusus untuk ajang web kompetisi bergengsi.',
         label: 'Milestone'
     }
 ];
-
 const createParticleElement = (x: number, y: number, color: string = DEFAULT_GLOW_COLOR): HTMLDivElement => {
     const el = document.createElement('div');
     el.className = 'particle';
@@ -80,7 +76,7 @@ const createParticleElement = (x: number, y: number, color: string = DEFAULT_GLO
     height: 4px;
     border-radius: 50%;
     background: rgba(${color}, 1);
-    box-shadow: 0 0 10px rgba(${color}, 0.8);
+    box-shadow: 0 0 6px rgba(${color}, 0.6);
     pointer-events: none;
     z-index: 100;
     left: ${x}px;
@@ -380,9 +376,11 @@ const GlobalSpotlight: React.FC<{
       border-radius: 50%;
       pointer-events: none;
       background: radial-gradient(circle,
-        rgba(${glowColor}, 0.1) 0%,
-        rgba(${glowColor}, 0.05) 15%,
-        rgba(${glowColor}, 0.02) 25%,
+        rgba(${glowColor}, 0.15) 0%,
+        rgba(${glowColor}, 0.08) 15%,
+        rgba(${glowColor}, 0.04) 25%,
+        rgba(${glowColor}, 0.02) 40%,
+        rgba(${glowColor}, 0.01) 65%,
         transparent 70%
       );
       z-index: 200;
@@ -493,7 +491,7 @@ const BentoCardGrid: React.FC<{
     gridRef?: React.RefObject<HTMLDivElement | null>;
 }> = ({ children, gridRef }) => (
     <div
-        className="bento-section grid gap-2 w-full select-none relative"
+        className="bento-section grid gap-2 p-3 max-w-7xl select-none relative"
         style={{ fontSize: 'clamp(1rem, 0.9rem + 0.5vw, 1.5rem)' }}
         ref={gridRef}
     >
@@ -543,18 +541,17 @@ const MagicBento: React.FC<BentoProps> = ({
             --glow-intensity: 0;
             --glow-radius: 200px;
             --glow-color: ${glowColor};
-            --border-color: #eab3084d; /* Warna Gold Transparan */
-            --background-dark: #060010aa;
+            --border-color: #2F293A;
+            --background-dark: #120F17;
             --white: hsl(0, 0%, 100%);
-            /* CSS original menggunakan variable ini untuk aksen */
-            --purple-primary: rgba(${glowColor}, 1); 
-            --purple-glow: rgba(${glowColor}, 0.2);
-            --purple-border: rgba(${glowColor}, 0.8);
+            --purple-primary: rgba(132, 0, 255, 1);
+            --purple-glow: rgba(132, 0, 255, 0.2);
+            --purple-border: rgba(132, 0, 255, 0.8);
           }
           
           .card-responsive {
             grid-template-columns: 1fr;
-            width: 100%;
+            width: 90%;
             margin: 0 auto;
             padding: 0.5rem;
           }
@@ -590,7 +587,7 @@ const MagicBento: React.FC<BentoProps> = ({
             content: '';
             position: absolute;
             inset: 0;
-            padding: 2px; /* Dikecilkan sedikit agar elegan */
+            padding: 6px;
             background: radial-gradient(var(--glow-radius) circle at var(--glow-x) var(--glow-y),
                 rgba(${glowColor}, calc(var(--glow-intensity) * 0.8)) 0%,
                 rgba(${glowColor}, calc(var(--glow-intensity) * 0.4)) 30%,
@@ -611,7 +608,7 @@ const MagicBento: React.FC<BentoProps> = ({
           }
           
           .card--border-glow:hover {
-            box-shadow: 0 4px 20px rgba(234, 179, 8, 0.15);
+            box-shadow: 0 4px 20px rgba(46, 24, 78, 0.4), 0 0 30px rgba(${glowColor}, 0.2);
           }
           
           .particle::before {
@@ -624,6 +621,10 @@ const MagicBento: React.FC<BentoProps> = ({
             background: rgba(${glowColor}, 0.2);
             border-radius: 50%;
             z-index: -1;
+          }
+          
+          .particle-container:hover {
+            box-shadow: 0 4px 20px rgba(46, 24, 78, 0.2), 0 0 30px rgba(${glowColor}, 0.2);
           }
           
           .text-clamp-1 {
@@ -673,7 +674,7 @@ const MagicBento: React.FC<BentoProps> = ({
             <BentoCardGrid gridRef={gridRef}>
                 <div className="card-responsive grid gap-2">
                     {cardData.map((card, index) => {
-                        const baseClassName = `card flex flex-col justify-between relative aspect-[4/3] min-h-[100px] w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-colors duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''
+                        const baseClassName = `card flex flex-col justify-between relative aspect-video min-h-[200px] w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-colors duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''
                             }`;
 
                         const cardStyle = {
@@ -700,14 +701,14 @@ const MagicBento: React.FC<BentoProps> = ({
                                     enableMagnetism={enableMagnetism}
                                 >
                                     <div className="card__header flex justify-between gap-3 relative text-white">
-                                        <span className="card__label text-2xl font-bold text-primary" style={{ color: 'rgba(234, 179, 8, 1)' }}>{card.label}</span>
+                                        <span className="card__label text-base">{card.label}</span>
                                     </div>
                                     <div className="card__content flex flex-col relative text-white">
                                         <h3 className={`card__title font-normal text-xl m-0 mb-1 ${textAutoHide ? 'text-clamp-1' : ''}`}>
                                             {card.title}
                                         </h3>
                                         <p
-                                            className={`card__description text-sm leading-5 opacity-80 ${textAutoHide ? 'text-clamp-2' : ''}`}
+                                            className={`card__description text-sm leading-5 opacity-90 ${textAutoHide ? 'text-clamp-2' : ''}`}
                                         >
                                             {card.description}
                                         </p>
@@ -716,17 +717,129 @@ const MagicBento: React.FC<BentoProps> = ({
                             );
                         }
 
-                        // Fallback jika bintang tidak aktif
                         return (
-                            <div key={index} className={baseClassName} style={cardStyle} >
+                            <div
+                                key={index}
+                                className={baseClassName}
+                                style={cardStyle}
+                                ref={el => {
+                                    if (!el) return;
+
+                                    const handleMouseMove = (e: MouseEvent) => {
+                                        if (shouldDisableAnimations) return;
+
+                                        const rect = el.getBoundingClientRect();
+                                        const x = e.clientX - rect.left;
+                                        const y = e.clientY - rect.top;
+                                        const centerX = rect.width / 2;
+                                        const centerY = rect.height / 2;
+
+                                        if (enableTilt) {
+                                            const rotateX = ((y - centerY) / centerY) * -10;
+                                            const rotateY = ((x - centerX) / centerX) * 10;
+
+                                            gsap.to(el, {
+                                                rotateX,
+                                                rotateY,
+                                                duration: 0.1,
+                                                ease: 'power2.out',
+                                                transformPerspective: 1000
+                                            });
+                                        }
+
+                                        if (enableMagnetism) {
+                                            const magnetX = (x - centerX) * 0.05;
+                                            const magnetY = (y - centerY) * 0.05;
+
+                                            gsap.to(el, {
+                                                x: magnetX,
+                                                y: magnetY,
+                                                duration: 0.3,
+                                                ease: 'power2.out'
+                                            });
+                                        }
+                                    };
+
+                                    const handleMouseLeave = () => {
+                                        if (shouldDisableAnimations) return;
+
+                                        if (enableTilt) {
+                                            gsap.to(el, {
+                                                rotateX: 0,
+                                                rotateY: 0,
+                                                duration: 0.3,
+                                                ease: 'power2.out'
+                                            });
+                                        }
+
+                                        if (enableMagnetism) {
+                                            gsap.to(el, {
+                                                x: 0,
+                                                y: 0,
+                                                duration: 0.3,
+                                                ease: 'power2.out'
+                                            });
+                                        }
+                                    };
+
+                                    const handleClick = (e: MouseEvent) => {
+                                        if (!clickEffect || shouldDisableAnimations) return;
+
+                                        const rect = el.getBoundingClientRect();
+                                        const x = e.clientX - rect.left;
+                                        const y = e.clientY - rect.top;
+
+                                        const maxDistance = Math.max(
+                                            Math.hypot(x, y),
+                                            Math.hypot(x - rect.width, y),
+                                            Math.hypot(x, y - rect.height),
+                                            Math.hypot(x - rect.width, y - rect.height)
+                                        );
+
+                                        const ripple = document.createElement('div');
+                                        ripple.style.cssText = `
+                      position: absolute;
+                      width: ${maxDistance * 2}px;
+                      height: ${maxDistance * 2}px;
+                      border-radius: 50%;
+                      background: radial-gradient(circle, rgba(${glowColor}, 0.4) 0%, rgba(${glowColor}, 0.2) 30%, transparent 70%);
+                      left: ${x - maxDistance}px;
+                      top: ${y - maxDistance}px;
+                      pointer-events: none;
+                      z-index: 1000;
+                    `;
+
+                                        el.appendChild(ripple);
+
+                                        gsap.fromTo(
+                                            ripple,
+                                            {
+                                                scale: 0,
+                                                opacity: 1
+                                            },
+                                            {
+                                                scale: 1,
+                                                opacity: 0,
+                                                duration: 0.8,
+                                                ease: 'power2.out',
+                                                onComplete: () => ripple.remove()
+                                            }
+                                        );
+                                    };
+
+                                    el.addEventListener('mousemove', handleMouseMove);
+                                    el.addEventListener('mouseleave', handleMouseLeave);
+                                    el.addEventListener('click', handleClick);
+                                }}
+                            >
                                 <div className="card__header flex justify-between gap-3 relative text-white">
-                                    <span className="card__label text-base text-primary" style={{ color: 'rgba(234, 179, 8, 1)' }}>{card.label}</span>
+                                    <span className="card__label text-base">{card.label}</span>
                                 </div>
                                 <div className="card__content flex flex-col relative text-white">
                                     <h3 className={`card__title font-normal text-base m-0 mb-1 ${textAutoHide ? 'text-clamp-1' : ''}`}>
                                         {card.title}
                                     </h3>
-                                    <p className={`card__description text-xs leading-5 opacity-80 ${textAutoHide ? 'text-clamp-2' : ''}`}>
+                                    <p className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? 'text-clamp-2' : ''}`}>
                                         {card.description}
                                     </p>
                                 </div>
