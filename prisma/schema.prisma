@@ -36,6 +36,15 @@ model User {
   chats    AIChatHistory[]
 }
 
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String   @unique
+  token   String   @unique
+  expires DateTime
+
+  @@map("password_reset_tokens") // Mengikuti konvensi snake_case untuk tabel database
+}
+
 model Category {
   id       String    @id @default(cuid())
   name     String
@@ -48,7 +57,7 @@ model Roadmap {
   title       String
   slug        String     @unique
   description String
-  difficulty  Difficulty
+  difficulty  Difficulty @default(BEGINNER)
   duration    String
   categoryId  String
 
@@ -56,6 +65,8 @@ model Roadmap {
   milestones Milestone[]
 
   createdAt DateTime @default(now())
+
+  userProgress UserProgress[]
 }
 
 model Milestone {
@@ -76,11 +87,14 @@ model Milestone {
 model UserProgress {
   id          String  @id @default(cuid())
   userId      String
+  roadmapId   String
   milestoneId String
   completed   Boolean @default(false)
+  isEnrolled  Boolean @default(true)
 
   user      User      @relation(fields: [userId], references: [id])
   milestone Milestone @relation(fields: [milestoneId], references: [id])
+  roadmap   Roadmap   @relation(fields: [roadmapId], references: [id])
 
   @@unique([userId, milestoneId])
 }

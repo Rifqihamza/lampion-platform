@@ -1,5 +1,11 @@
-// src/components/auth/SignupForm.tsx
-import { signIn } from "@/lib/auth";
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { signIn } from "next-auth/react";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,112 +16,152 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+
+import { useRegister } from "@/hooks/useRegister";
+import { RegisterInput, registerSchema } from "@/lib/validators/auth";
 
 export function SignupForm({
   className,
   ...props
-}: React.ComponentProps<typeof Card>) {
+}: React.ComponentProps<"div">) {
+  const { register: submitAction, isLoading } = useRegister();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterInput>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const onSubmit = async (data: RegisterInput) => {
+    await submitAction(data);
+  };
+
   return (
-    <Card className={cn("w-full max-w-md relative", className)} {...props}>
-      <Link href="/" className="absolute top-5 left-5">
-        <ArrowLeft size={20} />
-      </Link>
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Creat New Account</CardTitle>
-        <CardDescription>
-          Daftar untuk mulai belajar di Lampion Platform
-        </CardDescription>
-      </CardHeader>
+    <>
+      <div className={cn("flex flex-col justify-center gap-4", className)} {...props}>
+        <Card className="w-full relative rounded-xl bg-primary/5 backdrop-blur-sm py-6 px-4">
+          <Link
+            href="/"
+            className="absolute top-5 left-5 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft size={20} />
+          </Link>
 
-      <CardContent className="space-y-6">
-        <form className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium">
-              Nama Lengkap
-            </label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="John Doe"
-              required
-            />
-          </div>
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl font-bold tracking-tight">Create New Account</CardTitle>
+            <CardDescription>
+              Daftar untuk mulai belajar di Lampion Platform
+            </CardDescription>
+          </CardHeader>
 
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium">
-              Email
-            </label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="nama@email.com"
-              required
-            />
-          </div>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+              {/* Field Nama */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium">Nama Lengkap</label>
+                <Input
+                  {...register("name")}
+                  placeholder="John Doe"
+                  className={cn(errors.name ? "border-destructive" : "bg-zinc-950/20")}
+                  disabled={isLoading}
+                />
+                {errors.name && (
+                  <p className="text-sm font-medium text-destructive">{errors.name.message}</p>
+                )}
+              </div>
 
-          <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-medium">
-              Password
-            </label>
-            <Input id="password" type="password" required />
-          </div>
+              {/* Field Email */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium">Email</label>
+                <Input
+                  {...register("email")}
+                  type="email"
+                  placeholder="nama@email.com"
+                  className={cn(errors.email ? "border-destructive" : "bg-zinc-950/20")}
+                  disabled={isLoading}
+                />
+                {errors.email && (
+                  <p className="text-sm font-medium text-destructive">{errors.email.message}</p>
+                )}
+              </div>
 
-          <div className="space-y-2">
-            <label htmlFor="confirm-password" className="text-sm font-medium">
-              Konfirmasi Password
-            </label>
-            <Input id="confirm-password" type="password" required />
-          </div>
+              {/* Password Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium">Password</label>
+                  <Input
+                    {...register("password")}
+                    type="password"
+                    placeholder="••••••••"
+                    className={cn(errors.password ? "border-destructive" : "bg-zinc-950/20")}
+                    disabled={isLoading}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium">Konfirmasi</label>
+                  <Input
+                    {...register("confirmPassword")}
+                    type="password"
+                    placeholder="••••••••"
+                    className={cn(errors.confirmPassword ? "border-destructive" : "bg-zinc-950/20")}
+                    disabled={isLoading}
+                  />
+                </div>
+              </div>
 
-          <Button type="submit" className="w-full" disabled>
-            Daftar dengan Email
-          </Button>
-        </form>
+              {/* ✅ Tampilkan error password & confirmPassword secara terpisah agar lebih jelas */}
+              {errors.password && (
+                <p className="text-sm font-medium text-destructive">{errors.password.message}</p>
+              )}
+              {errors.confirmPassword && (
+                <p className="text-sm font-medium text-destructive">{errors.confirmPassword.message}</p>
+              )}
 
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-zinc-900 px-2 text-muted-foreground">
-              atau
-            </span>
-          </div>
-        </div>
+              <div className="mt-3">
+                <Button type="submit" className="w-full mt-2" disabled={isLoading}>
+                  {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Daftar dengan Email"}
+                </Button>
+              </div>
+            </form>
 
-        {/* Google Sign Up */}
-        <form
-          action={async () => {
-            "use server";
-            await signIn("google", {
-              redirectTo: "/dashboard"
-            });
-          }}
-        >
-          <Button type="submit" variant="outline" className="w-full" size="lg">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="mr-2 h-5 w-5"
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-transparent px-2 text-muted-foreground">atau</span>
+              </div>
+            </div>
+
+            <Button
+              variant="outline"
+              className="w-full"
+              size="lg"
+              disabled={isLoading}
+              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
             >
-              <path
-                d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                fill="currentColor"
-              />
-            </svg>
-            Daftar dengan Google
-          </Button>
-        </form>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="mr-2 h-5 w-5">
+                <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" fill="currentColor" />
+              </svg>
+              Daftar dengan Google
+            </Button>
 
-        <p className="text-center text-sm text-muted-foreground">
-          Sudah punya akun?{" "}
-          <a href="/login" className="text-primary hover:underline font-medium">
-            Masuk di sini
-          </a>
-        </p>
-      </CardContent>
-    </Card>
+            <p className="text-center text-sm text-muted-foreground mt-4">
+              Sudah punya akun?{" "}
+              <Link href="/login" className="text-primary hover:underline font-medium">
+                Masuk di sini
+              </Link>
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 }

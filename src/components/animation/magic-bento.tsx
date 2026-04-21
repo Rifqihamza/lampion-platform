@@ -31,37 +31,37 @@ const MOBILE_BREAKPOINT = 768;
 
 const cardData: BentoCardProps[] = [
     {
-        color: '#5a10104d', // Dark Background
+        color: '#5a10101d', // Dark Background
         title: 'Roadmap Terstruktur',
         description: 'Navigasi belajar dari nol hingga mahir tanpa tersesat di lautan informasi.',
         label: 'Navigation'
     },
     {
-        color: '#5a10104d',
+        color: '#5a10101d',
         title: 'Pendidikan Inklusif',
         description: 'Akses kurasi materi berkualitas secara gratis untuk semua kalangan.',
         label: 'Inclusivity'
     },
     {
-        color: '#5a10104d',
+        color: '#5a10101d',
         title: 'Modern Tech Stack',
         description: 'Dibangun dengan Next.js 16, Tailwind v4, dan performa server lokal yang ngebut.',
         label: 'Technology'
     },
     {
-        color: '#5a10104d',
+        color: '#5a10101d',
         title: 'Progress Tracking',
         description: 'Pantau sejauh mana perkembangan skill kamu dengan dashboard yang intuitif.',
         label: 'Self-Growth'
     },
     {
-        color: '#5a10104d',
+        color: '#5a10101d',
         title: 'Materi Terkurasi',
         description: 'Hanya menyajikan sumber belajar terbaik dari berbagai platform edukasi dunia.',
         label: 'High Quality'
     },
     {
-        color: '#5a10104d',
+        color: '#5a10101d',
         title: 'IOFest 2026',
         description: 'Project inovasi yang dikembangkan khusus untuk ajang web kompetisi bergengsi.',
         label: 'Milestone'
@@ -674,7 +674,7 @@ const MagicBento: React.FC<BentoProps> = ({
             <BentoCardGrid gridRef={gridRef}>
                 <div className="card-responsive grid gap-2">
                     {cardData.map((card, index) => {
-                        const baseClassName = `card flex flex-col justify-between relative aspect-video min-h-[200px] w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-colors duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''
+                        const baseClassName = `card flex flex-col justify-between relative aspect-video min-h-[250px] backdrop-blur-xs w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-colors duration-300 ease-in-out hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${enableBorderGlow ? 'card--border-glow' : ''
                             }`;
 
                         const cardStyle = {
@@ -701,10 +701,10 @@ const MagicBento: React.FC<BentoProps> = ({
                                     enableMagnetism={enableMagnetism}
                                 >
                                     <div className="card__header flex justify-between gap-3 relative text-white">
-                                        <span className="card__label text-base">{card.label}</span>
+                                        <span className="card__label text-xl ">{card.label}</span>
                                     </div>
                                     <div className="card__content flex flex-col relative text-white">
-                                        <h3 className={`card__title font-normal text-xl m-0 mb-1 ${textAutoHide ? 'text-clamp-1' : ''}`}>
+                                        <h3 className={`card__title font-normal text-lg m-0 mb-1 ${textAutoHide ? 'text-clamp-1' : ''}`}>
                                             {card.title}
                                         </h3>
                                         <p

@@ -208,6 +208,7 @@ export type RoadmapWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Roadmap"> | Date | string
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   milestones?: Prisma.MilestoneListRelationFilter
+  userProgress?: Prisma.UserProgressListRelationFilter
 }
 
 export type RoadmapOrderByWithRelationInput = {
@@ -221,6 +222,7 @@ export type RoadmapOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
   milestones?: Prisma.MilestoneOrderByRelationAggregateInput
+  userProgress?: Prisma.UserProgressOrderByRelationAggregateInput
   _relevance?: Prisma.RoadmapOrderByRelevanceInput
 }
 
@@ -238,6 +240,7 @@ export type RoadmapWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Roadmap"> | Date | string
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   milestones?: Prisma.MilestoneListRelationFilter
+  userProgress?: Prisma.UserProgressListRelationFilter
 }, "id" | "slug">
 
 export type RoadmapOrderByWithAggregationInput = {
@@ -273,11 +276,12 @@ export type RoadmapCreateInput = {
   title: string
   slug: string
   description: string
-  difficulty: $Enums.Difficulty
+  difficulty?: $Enums.Difficulty
   duration: string
   createdAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutRoadmapsInput
   milestones?: Prisma.MilestoneCreateNestedManyWithoutRoadmapInput
+  userProgress?: Prisma.UserProgressCreateNestedManyWithoutRoadmapInput
 }
 
 export type RoadmapUncheckedCreateInput = {
@@ -285,11 +289,12 @@ export type RoadmapUncheckedCreateInput = {
   title: string
   slug: string
   description: string
-  difficulty: $Enums.Difficulty
+  difficulty?: $Enums.Difficulty
   duration: string
   categoryId: string
   createdAt?: Date | string
   milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutRoadmapInput
+  userProgress?: Prisma.UserProgressUncheckedCreateNestedManyWithoutRoadmapInput
 }
 
 export type RoadmapUpdateInput = {
@@ -302,6 +307,7 @@ export type RoadmapUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutRoadmapsNestedInput
   milestones?: Prisma.MilestoneUpdateManyWithoutRoadmapNestedInput
+  userProgress?: Prisma.UserProgressUpdateManyWithoutRoadmapNestedInput
 }
 
 export type RoadmapUncheckedUpdateInput = {
@@ -314,6 +320,7 @@ export type RoadmapUncheckedUpdateInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutRoadmapNestedInput
+  userProgress?: Prisma.UserProgressUncheckedUpdateManyWithoutRoadmapNestedInput
 }
 
 export type RoadmapCreateManyInput = {
@@ -321,7 +328,7 @@ export type RoadmapCreateManyInput = {
   title: string
   slug: string
   description: string
-  difficulty: $Enums.Difficulty
+  difficulty?: $Enums.Difficulty
   duration: string
   categoryId: string
   createdAt?: Date | string
@@ -462,15 +469,30 @@ export type RoadmapUpdateOneRequiredWithoutMilestonesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.RoadmapUpdateToOneWithWhereWithoutMilestonesInput, Prisma.RoadmapUpdateWithoutMilestonesInput>, Prisma.RoadmapUncheckedUpdateWithoutMilestonesInput>
 }
 
+export type RoadmapCreateNestedOneWithoutUserProgressInput = {
+  create?: Prisma.XOR<Prisma.RoadmapCreateWithoutUserProgressInput, Prisma.RoadmapUncheckedCreateWithoutUserProgressInput>
+  connectOrCreate?: Prisma.RoadmapCreateOrConnectWithoutUserProgressInput
+  connect?: Prisma.RoadmapWhereUniqueInput
+}
+
+export type RoadmapUpdateOneRequiredWithoutUserProgressNestedInput = {
+  create?: Prisma.XOR<Prisma.RoadmapCreateWithoutUserProgressInput, Prisma.RoadmapUncheckedCreateWithoutUserProgressInput>
+  connectOrCreate?: Prisma.RoadmapCreateOrConnectWithoutUserProgressInput
+  upsert?: Prisma.RoadmapUpsertWithoutUserProgressInput
+  connect?: Prisma.RoadmapWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RoadmapUpdateToOneWithWhereWithoutUserProgressInput, Prisma.RoadmapUpdateWithoutUserProgressInput>, Prisma.RoadmapUncheckedUpdateWithoutUserProgressInput>
+}
+
 export type RoadmapCreateWithoutCategoryInput = {
   id?: string
   title: string
   slug: string
   description: string
-  difficulty: $Enums.Difficulty
+  difficulty?: $Enums.Difficulty
   duration: string
   createdAt?: Date | string
   milestones?: Prisma.MilestoneCreateNestedManyWithoutRoadmapInput
+  userProgress?: Prisma.UserProgressCreateNestedManyWithoutRoadmapInput
 }
 
 export type RoadmapUncheckedCreateWithoutCategoryInput = {
@@ -478,10 +500,11 @@ export type RoadmapUncheckedCreateWithoutCategoryInput = {
   title: string
   slug: string
   description: string
-  difficulty: $Enums.Difficulty
+  difficulty?: $Enums.Difficulty
   duration: string
   createdAt?: Date | string
   milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutRoadmapInput
+  userProgress?: Prisma.UserProgressUncheckedCreateNestedManyWithoutRoadmapInput
 }
 
 export type RoadmapCreateOrConnectWithoutCategoryInput = {
@@ -529,10 +552,11 @@ export type RoadmapCreateWithoutMilestonesInput = {
   title: string
   slug: string
   description: string
-  difficulty: $Enums.Difficulty
+  difficulty?: $Enums.Difficulty
   duration: string
   createdAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutRoadmapsInput
+  userProgress?: Prisma.UserProgressCreateNestedManyWithoutRoadmapInput
 }
 
 export type RoadmapUncheckedCreateWithoutMilestonesInput = {
@@ -540,10 +564,11 @@ export type RoadmapUncheckedCreateWithoutMilestonesInput = {
   title: string
   slug: string
   description: string
-  difficulty: $Enums.Difficulty
+  difficulty?: $Enums.Difficulty
   duration: string
   categoryId: string
   createdAt?: Date | string
+  userProgress?: Prisma.UserProgressUncheckedCreateNestedManyWithoutRoadmapInput
 }
 
 export type RoadmapCreateOrConnectWithoutMilestonesInput = {
@@ -571,6 +596,7 @@ export type RoadmapUpdateWithoutMilestonesInput = {
   duration?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutRoadmapsNestedInput
+  userProgress?: Prisma.UserProgressUpdateManyWithoutRoadmapNestedInput
 }
 
 export type RoadmapUncheckedUpdateWithoutMilestonesInput = {
@@ -582,6 +608,71 @@ export type RoadmapUncheckedUpdateWithoutMilestonesInput = {
   duration?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userProgress?: Prisma.UserProgressUncheckedUpdateManyWithoutRoadmapNestedInput
+}
+
+export type RoadmapCreateWithoutUserProgressInput = {
+  id?: string
+  title: string
+  slug: string
+  description: string
+  difficulty?: $Enums.Difficulty
+  duration: string
+  createdAt?: Date | string
+  category: Prisma.CategoryCreateNestedOneWithoutRoadmapsInput
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutRoadmapInput
+}
+
+export type RoadmapUncheckedCreateWithoutUserProgressInput = {
+  id?: string
+  title: string
+  slug: string
+  description: string
+  difficulty?: $Enums.Difficulty
+  duration: string
+  categoryId: string
+  createdAt?: Date | string
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutRoadmapInput
+}
+
+export type RoadmapCreateOrConnectWithoutUserProgressInput = {
+  where: Prisma.RoadmapWhereUniqueInput
+  create: Prisma.XOR<Prisma.RoadmapCreateWithoutUserProgressInput, Prisma.RoadmapUncheckedCreateWithoutUserProgressInput>
+}
+
+export type RoadmapUpsertWithoutUserProgressInput = {
+  update: Prisma.XOR<Prisma.RoadmapUpdateWithoutUserProgressInput, Prisma.RoadmapUncheckedUpdateWithoutUserProgressInput>
+  create: Prisma.XOR<Prisma.RoadmapCreateWithoutUserProgressInput, Prisma.RoadmapUncheckedCreateWithoutUserProgressInput>
+  where?: Prisma.RoadmapWhereInput
+}
+
+export type RoadmapUpdateToOneWithWhereWithoutUserProgressInput = {
+  where?: Prisma.RoadmapWhereInput
+  data: Prisma.XOR<Prisma.RoadmapUpdateWithoutUserProgressInput, Prisma.RoadmapUncheckedUpdateWithoutUserProgressInput>
+}
+
+export type RoadmapUpdateWithoutUserProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  duration?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.CategoryUpdateOneRequiredWithoutRoadmapsNestedInput
+  milestones?: Prisma.MilestoneUpdateManyWithoutRoadmapNestedInput
+}
+
+export type RoadmapUncheckedUpdateWithoutUserProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  duration?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutRoadmapNestedInput
 }
 
 export type RoadmapCreateManyCategoryInput = {
@@ -589,7 +680,7 @@ export type RoadmapCreateManyCategoryInput = {
   title: string
   slug: string
   description: string
-  difficulty: $Enums.Difficulty
+  difficulty?: $Enums.Difficulty
   duration: string
   createdAt?: Date | string
 }
@@ -603,6 +694,7 @@ export type RoadmapUpdateWithoutCategoryInput = {
   duration?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   milestones?: Prisma.MilestoneUpdateManyWithoutRoadmapNestedInput
+  userProgress?: Prisma.UserProgressUpdateManyWithoutRoadmapNestedInput
 }
 
 export type RoadmapUncheckedUpdateWithoutCategoryInput = {
@@ -614,6 +706,7 @@ export type RoadmapUncheckedUpdateWithoutCategoryInput = {
   duration?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutRoadmapNestedInput
+  userProgress?: Prisma.UserProgressUncheckedUpdateManyWithoutRoadmapNestedInput
 }
 
 export type RoadmapUncheckedUpdateManyWithoutCategoryInput = {
@@ -633,10 +726,12 @@ export type RoadmapUncheckedUpdateManyWithoutCategoryInput = {
 
 export type RoadmapCountOutputType = {
   milestones: number
+  userProgress: number
 }
 
 export type RoadmapCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   milestones?: boolean | RoadmapCountOutputTypeCountMilestonesArgs
+  userProgress?: boolean | RoadmapCountOutputTypeCountUserProgressArgs
 }
 
 /**
@@ -656,6 +751,13 @@ export type RoadmapCountOutputTypeCountMilestonesArgs<ExtArgs extends runtime.Ty
   where?: Prisma.MilestoneWhereInput
 }
 
+/**
+ * RoadmapCountOutputType without action
+ */
+export type RoadmapCountOutputTypeCountUserProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserProgressWhereInput
+}
+
 
 export type RoadmapSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -668,6 +770,7 @@ export type RoadmapSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   milestones?: boolean | Prisma.Roadmap$milestonesArgs<ExtArgs>
+  userProgress?: boolean | Prisma.Roadmap$userProgressArgs<ExtArgs>
   _count?: boolean | Prisma.RoadmapCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["roadmap"]>
 
@@ -688,6 +791,7 @@ export type RoadmapOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type RoadmapInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   milestones?: boolean | Prisma.Roadmap$milestonesArgs<ExtArgs>
+  userProgress?: boolean | Prisma.Roadmap$userProgressArgs<ExtArgs>
   _count?: boolean | Prisma.RoadmapCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -696,6 +800,7 @@ export type $RoadmapPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     category: Prisma.$CategoryPayload<ExtArgs>
     milestones: Prisma.$MilestonePayload<ExtArgs>[]
+    userProgress: Prisma.$UserProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1048,6 +1153,7 @@ export interface Prisma__RoadmapClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   milestones<T extends Prisma.Roadmap$milestonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Roadmap$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userProgress<T extends Prisma.Roadmap$userProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Roadmap$userProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1454,6 +1560,30 @@ export type Roadmap$milestonesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.MilestoneScalarFieldEnum | Prisma.MilestoneScalarFieldEnum[]
+}
+
+/**
+ * Roadmap.userProgress
+ */
+export type Roadmap$userProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserProgress
+   */
+  select?: Prisma.UserProgressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserProgress
+   */
+  omit?: Prisma.UserProgressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserProgressInclude<ExtArgs> | null
+  where?: Prisma.UserProgressWhereInput
+  orderBy?: Prisma.UserProgressOrderByWithRelationInput | Prisma.UserProgressOrderByWithRelationInput[]
+  cursor?: Prisma.UserProgressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserProgressScalarFieldEnum | Prisma.UserProgressScalarFieldEnum[]
 }
 
 /**

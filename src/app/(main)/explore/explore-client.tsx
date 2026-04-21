@@ -3,10 +3,10 @@
 import { CategoryType, RoadmapWithRelations } from "@/types";
 import { useExplore } from "@/hooks/useExplore";
 
-import CategoryFilter from "./_components/category-filter";
-import DifficultyFilter from "./_components/difficulty-filter";
-import SearchBar from "./_components/search-bar";
-import RoadmapCard from "./_components/roadmap-card";
+import CategoryFilter from "../../../components/features/category-filter";
+import DifficultyFilter from "../../../components/features/difficulty-filter";
+import SearchBar from "../../../components/features/search-bar";
+import RoadmapCard from "../../../components/features/roadmap-card";
 
 export default function ExploreClient({
     roadmaps,
@@ -18,10 +18,9 @@ export default function ExploreClient({
     const explore = useExplore();
 
     return (
-        <div className="space-y-6">
-            <SearchBar />
-
-            <div className="flex gap-4">
+        <div className="space-y-6 w-full">
+            <div className="flex flex-col md:flex-row w-full h-full gap-2">
+                <SearchBar />
                 <CategoryFilter
                     categories={categories}
                     selected={explore.category}
@@ -29,8 +28,9 @@ export default function ExploreClient({
                 />
 
                 <DifficultyFilter
+
                     selected={explore.difficulty}
-                    onSelect={explore.setDifficulty}
+                    onSelect={(level) => explore.setDifficulty(level === "" ? null : level)}
                 />
             </div>
 
@@ -39,11 +39,11 @@ export default function ExploreClient({
             )}
 
             {roadmaps.length === 0 ? (
-                <p className="text-gray-400">
+                <p className="text-gray-400 w-full h-dvh flex items-center justify-center">
                     No roadmap found
                 </p>
             ) : (
-                <div className="grid md:grid-cols-3 gap-6">
+                <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {roadmaps.map((r) => (
                         <RoadmapCard key={r.id} roadmap={r} />
                     ))}

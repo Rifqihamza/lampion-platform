@@ -4,6 +4,8 @@ import Provider from "@/components/provider/Provider";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import AnimateBackground from "@/components/animation/AnimateBackground";
+import { Toaster } from "@/components/ui/sonner";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -20,9 +22,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("antialiased", "font-sans", geist.variable)} suppressHydrationWarning
+      className={cn("antialiased font-sans", geist.variable)}
+      suppressHydrationWarning // Wajib di sini
     >
-      <body>
+      <body className="min-h-screen bg-background">
         <Provider>
           <ThemeProvider
             attribute="class"
@@ -30,7 +33,12 @@ export default function RootLayout({
             enableSystem={false}
             disableTransitionOnChange
           >
+            <AnimateBackground />
+
             {children}
+
+            {/* Toaster diletakkan di akhir body */}
+            <Toaster position="top-right" richColors closeButton />
           </ThemeProvider>
         </Provider>
       </body>

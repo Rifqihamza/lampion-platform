@@ -27,22 +27,28 @@ export type AggregateUserProgress = {
 export type UserProgressMinAggregateOutputType = {
   id: string | null
   userId: string | null
+  roadmapId: string | null
   milestoneId: string | null
   completed: boolean | null
+  isEnrolled: boolean | null
 }
 
 export type UserProgressMaxAggregateOutputType = {
   id: string | null
   userId: string | null
+  roadmapId: string | null
   milestoneId: string | null
   completed: boolean | null
+  isEnrolled: boolean | null
 }
 
 export type UserProgressCountAggregateOutputType = {
   id: number
   userId: number
+  roadmapId: number
   milestoneId: number
   completed: number
+  isEnrolled: number
   _all: number
 }
 
@@ -50,22 +56,28 @@ export type UserProgressCountAggregateOutputType = {
 export type UserProgressMinAggregateInputType = {
   id?: true
   userId?: true
+  roadmapId?: true
   milestoneId?: true
   completed?: true
+  isEnrolled?: true
 }
 
 export type UserProgressMaxAggregateInputType = {
   id?: true
   userId?: true
+  roadmapId?: true
   milestoneId?: true
   completed?: true
+  isEnrolled?: true
 }
 
 export type UserProgressCountAggregateInputType = {
   id?: true
   userId?: true
+  roadmapId?: true
   milestoneId?: true
   completed?: true
+  isEnrolled?: true
   _all?: true
 }
 
@@ -144,8 +156,10 @@ export type UserProgressGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type UserProgressGroupByOutputType = {
   id: string
   userId: string
+  roadmapId: string
   milestoneId: string
   completed: boolean
+  isEnrolled: boolean
   _count: UserProgressCountAggregateOutputType | null
   _min: UserProgressMinAggregateOutputType | null
   _max: UserProgressMaxAggregateOutputType | null
@@ -172,19 +186,25 @@ export type UserProgressWhereInput = {
   NOT?: Prisma.UserProgressWhereInput | Prisma.UserProgressWhereInput[]
   id?: Prisma.StringFilter<"UserProgress"> | string
   userId?: Prisma.StringFilter<"UserProgress"> | string
+  roadmapId?: Prisma.StringFilter<"UserProgress"> | string
   milestoneId?: Prisma.StringFilter<"UserProgress"> | string
   completed?: Prisma.BoolFilter<"UserProgress"> | boolean
+  isEnrolled?: Prisma.BoolFilter<"UserProgress"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   milestone?: Prisma.XOR<Prisma.MilestoneScalarRelationFilter, Prisma.MilestoneWhereInput>
+  roadmap?: Prisma.XOR<Prisma.RoadmapScalarRelationFilter, Prisma.RoadmapWhereInput>
 }
 
 export type UserProgressOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  roadmapId?: Prisma.SortOrder
   milestoneId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
+  isEnrolled?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   milestone?: Prisma.MilestoneOrderByWithRelationInput
+  roadmap?: Prisma.RoadmapOrderByWithRelationInput
   _relevance?: Prisma.UserProgressOrderByRelevanceInput
 }
 
@@ -195,17 +215,22 @@ export type UserProgressWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserProgressWhereInput[]
   NOT?: Prisma.UserProgressWhereInput | Prisma.UserProgressWhereInput[]
   userId?: Prisma.StringFilter<"UserProgress"> | string
+  roadmapId?: Prisma.StringFilter<"UserProgress"> | string
   milestoneId?: Prisma.StringFilter<"UserProgress"> | string
   completed?: Prisma.BoolFilter<"UserProgress"> | boolean
+  isEnrolled?: Prisma.BoolFilter<"UserProgress"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   milestone?: Prisma.XOR<Prisma.MilestoneScalarRelationFilter, Prisma.MilestoneWhereInput>
+  roadmap?: Prisma.XOR<Prisma.RoadmapScalarRelationFilter, Prisma.RoadmapWhereInput>
 }, "id" | "userId_milestoneId">
 
 export type UserProgressOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  roadmapId?: Prisma.SortOrder
   milestoneId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
+  isEnrolled?: Prisma.SortOrder
   _count?: Prisma.UserProgressCountOrderByAggregateInput
   _max?: Prisma.UserProgressMaxOrderByAggregateInput
   _min?: Prisma.UserProgressMinOrderByAggregateInput
@@ -217,55 +242,70 @@ export type UserProgressScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserProgressScalarWhereWithAggregatesInput | Prisma.UserProgressScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"UserProgress"> | string
   userId?: Prisma.StringWithAggregatesFilter<"UserProgress"> | string
+  roadmapId?: Prisma.StringWithAggregatesFilter<"UserProgress"> | string
   milestoneId?: Prisma.StringWithAggregatesFilter<"UserProgress"> | string
   completed?: Prisma.BoolWithAggregatesFilter<"UserProgress"> | boolean
+  isEnrolled?: Prisma.BoolWithAggregatesFilter<"UserProgress"> | boolean
 }
 
 export type UserProgressCreateInput = {
   id?: string
   completed?: boolean
+  isEnrolled?: boolean
   user: Prisma.UserCreateNestedOneWithoutProgressInput
   milestone: Prisma.MilestoneCreateNestedOneWithoutProgressInput
+  roadmap: Prisma.RoadmapCreateNestedOneWithoutUserProgressInput
 }
 
 export type UserProgressUncheckedCreateInput = {
   id?: string
   userId: string
+  roadmapId: string
   milestoneId: string
   completed?: boolean
+  isEnrolled?: boolean
 }
 
 export type UserProgressUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutProgressNestedInput
   milestone?: Prisma.MilestoneUpdateOneRequiredWithoutProgressNestedInput
+  roadmap?: Prisma.RoadmapUpdateOneRequiredWithoutUserProgressNestedInput
 }
 
 export type UserProgressUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  roadmapId?: Prisma.StringFieldUpdateOperationsInput | string
   milestoneId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserProgressCreateManyInput = {
   id?: string
   userId: string
+  roadmapId: string
   milestoneId: string
   completed?: boolean
+  isEnrolled?: boolean
 }
 
 export type UserProgressUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserProgressUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  roadmapId?: Prisma.StringFieldUpdateOperationsInput | string
   milestoneId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserProgressListRelationFilter = {
@@ -292,22 +332,28 @@ export type UserProgressUserIdMilestoneIdCompoundUniqueInput = {
 export type UserProgressCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  roadmapId?: Prisma.SortOrder
   milestoneId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
+  isEnrolled?: Prisma.SortOrder
 }
 
 export type UserProgressMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  roadmapId?: Prisma.SortOrder
   milestoneId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
+  isEnrolled?: Prisma.SortOrder
 }
 
 export type UserProgressMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  roadmapId?: Prisma.SortOrder
   milestoneId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
+  isEnrolled?: Prisma.SortOrder
 }
 
 export type UserProgressCreateNestedManyWithoutUserInput = {
@@ -349,6 +395,48 @@ export type UserProgressUncheckedUpdateManyWithoutUserNestedInput = {
   connect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
   update?: Prisma.UserProgressUpdateWithWhereUniqueWithoutUserInput | Prisma.UserProgressUpdateWithWhereUniqueWithoutUserInput[]
   updateMany?: Prisma.UserProgressUpdateManyWithWhereWithoutUserInput | Prisma.UserProgressUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.UserProgressScalarWhereInput | Prisma.UserProgressScalarWhereInput[]
+}
+
+export type UserProgressCreateNestedManyWithoutRoadmapInput = {
+  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutRoadmapInput, Prisma.UserProgressUncheckedCreateWithoutRoadmapInput> | Prisma.UserProgressCreateWithoutRoadmapInput[] | Prisma.UserProgressUncheckedCreateWithoutRoadmapInput[]
+  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutRoadmapInput | Prisma.UserProgressCreateOrConnectWithoutRoadmapInput[]
+  createMany?: Prisma.UserProgressCreateManyRoadmapInputEnvelope
+  connect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+}
+
+export type UserProgressUncheckedCreateNestedManyWithoutRoadmapInput = {
+  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutRoadmapInput, Prisma.UserProgressUncheckedCreateWithoutRoadmapInput> | Prisma.UserProgressCreateWithoutRoadmapInput[] | Prisma.UserProgressUncheckedCreateWithoutRoadmapInput[]
+  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutRoadmapInput | Prisma.UserProgressCreateOrConnectWithoutRoadmapInput[]
+  createMany?: Prisma.UserProgressCreateManyRoadmapInputEnvelope
+  connect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+}
+
+export type UserProgressUpdateManyWithoutRoadmapNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutRoadmapInput, Prisma.UserProgressUncheckedCreateWithoutRoadmapInput> | Prisma.UserProgressCreateWithoutRoadmapInput[] | Prisma.UserProgressUncheckedCreateWithoutRoadmapInput[]
+  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutRoadmapInput | Prisma.UserProgressCreateOrConnectWithoutRoadmapInput[]
+  upsert?: Prisma.UserProgressUpsertWithWhereUniqueWithoutRoadmapInput | Prisma.UserProgressUpsertWithWhereUniqueWithoutRoadmapInput[]
+  createMany?: Prisma.UserProgressCreateManyRoadmapInputEnvelope
+  set?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+  disconnect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+  delete?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+  connect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+  update?: Prisma.UserProgressUpdateWithWhereUniqueWithoutRoadmapInput | Prisma.UserProgressUpdateWithWhereUniqueWithoutRoadmapInput[]
+  updateMany?: Prisma.UserProgressUpdateManyWithWhereWithoutRoadmapInput | Prisma.UserProgressUpdateManyWithWhereWithoutRoadmapInput[]
+  deleteMany?: Prisma.UserProgressScalarWhereInput | Prisma.UserProgressScalarWhereInput[]
+}
+
+export type UserProgressUncheckedUpdateManyWithoutRoadmapNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutRoadmapInput, Prisma.UserProgressUncheckedCreateWithoutRoadmapInput> | Prisma.UserProgressCreateWithoutRoadmapInput[] | Prisma.UserProgressUncheckedCreateWithoutRoadmapInput[]
+  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutRoadmapInput | Prisma.UserProgressCreateOrConnectWithoutRoadmapInput[]
+  upsert?: Prisma.UserProgressUpsertWithWhereUniqueWithoutRoadmapInput | Prisma.UserProgressUpsertWithWhereUniqueWithoutRoadmapInput[]
+  createMany?: Prisma.UserProgressCreateManyRoadmapInputEnvelope
+  set?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+  disconnect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+  delete?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+  connect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
+  update?: Prisma.UserProgressUpdateWithWhereUniqueWithoutRoadmapInput | Prisma.UserProgressUpdateWithWhereUniqueWithoutRoadmapInput[]
+  updateMany?: Prisma.UserProgressUpdateManyWithWhereWithoutRoadmapInput | Prisma.UserProgressUpdateManyWithWhereWithoutRoadmapInput[]
   deleteMany?: Prisma.UserProgressScalarWhereInput | Prisma.UserProgressScalarWhereInput[]
 }
 
@@ -401,13 +489,17 @@ export type BoolFieldUpdateOperationsInput = {
 export type UserProgressCreateWithoutUserInput = {
   id?: string
   completed?: boolean
+  isEnrolled?: boolean
   milestone: Prisma.MilestoneCreateNestedOneWithoutProgressInput
+  roadmap: Prisma.RoadmapCreateNestedOneWithoutUserProgressInput
 }
 
 export type UserProgressUncheckedCreateWithoutUserInput = {
   id?: string
+  roadmapId: string
   milestoneId: string
   completed?: boolean
+  isEnrolled?: boolean
 }
 
 export type UserProgressCreateOrConnectWithoutUserInput = {
@@ -442,20 +534,68 @@ export type UserProgressScalarWhereInput = {
   NOT?: Prisma.UserProgressScalarWhereInput | Prisma.UserProgressScalarWhereInput[]
   id?: Prisma.StringFilter<"UserProgress"> | string
   userId?: Prisma.StringFilter<"UserProgress"> | string
+  roadmapId?: Prisma.StringFilter<"UserProgress"> | string
   milestoneId?: Prisma.StringFilter<"UserProgress"> | string
   completed?: Prisma.BoolFilter<"UserProgress"> | boolean
+  isEnrolled?: Prisma.BoolFilter<"UserProgress"> | boolean
+}
+
+export type UserProgressCreateWithoutRoadmapInput = {
+  id?: string
+  completed?: boolean
+  isEnrolled?: boolean
+  user: Prisma.UserCreateNestedOneWithoutProgressInput
+  milestone: Prisma.MilestoneCreateNestedOneWithoutProgressInput
+}
+
+export type UserProgressUncheckedCreateWithoutRoadmapInput = {
+  id?: string
+  userId: string
+  milestoneId: string
+  completed?: boolean
+  isEnrolled?: boolean
+}
+
+export type UserProgressCreateOrConnectWithoutRoadmapInput = {
+  where: Prisma.UserProgressWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserProgressCreateWithoutRoadmapInput, Prisma.UserProgressUncheckedCreateWithoutRoadmapInput>
+}
+
+export type UserProgressCreateManyRoadmapInputEnvelope = {
+  data: Prisma.UserProgressCreateManyRoadmapInput | Prisma.UserProgressCreateManyRoadmapInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserProgressUpsertWithWhereUniqueWithoutRoadmapInput = {
+  where: Prisma.UserProgressWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserProgressUpdateWithoutRoadmapInput, Prisma.UserProgressUncheckedUpdateWithoutRoadmapInput>
+  create: Prisma.XOR<Prisma.UserProgressCreateWithoutRoadmapInput, Prisma.UserProgressUncheckedCreateWithoutRoadmapInput>
+}
+
+export type UserProgressUpdateWithWhereUniqueWithoutRoadmapInput = {
+  where: Prisma.UserProgressWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserProgressUpdateWithoutRoadmapInput, Prisma.UserProgressUncheckedUpdateWithoutRoadmapInput>
+}
+
+export type UserProgressUpdateManyWithWhereWithoutRoadmapInput = {
+  where: Prisma.UserProgressScalarWhereInput
+  data: Prisma.XOR<Prisma.UserProgressUpdateManyMutationInput, Prisma.UserProgressUncheckedUpdateManyWithoutRoadmapInput>
 }
 
 export type UserProgressCreateWithoutMilestoneInput = {
   id?: string
   completed?: boolean
+  isEnrolled?: boolean
   user: Prisma.UserCreateNestedOneWithoutProgressInput
+  roadmap: Prisma.RoadmapCreateNestedOneWithoutUserProgressInput
 }
 
 export type UserProgressUncheckedCreateWithoutMilestoneInput = {
   id?: string
   userId: string
+  roadmapId: string
   completed?: boolean
+  isEnrolled?: boolean
 }
 
 export type UserProgressCreateOrConnectWithoutMilestoneInput = {
@@ -486,50 +626,98 @@ export type UserProgressUpdateManyWithWhereWithoutMilestoneInput = {
 
 export type UserProgressCreateManyUserInput = {
   id?: string
+  roadmapId: string
   milestoneId: string
   completed?: boolean
+  isEnrolled?: boolean
 }
 
 export type UserProgressUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   milestone?: Prisma.MilestoneUpdateOneRequiredWithoutProgressNestedInput
+  roadmap?: Prisma.RoadmapUpdateOneRequiredWithoutUserProgressNestedInput
 }
 
 export type UserProgressUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  roadmapId?: Prisma.StringFieldUpdateOperationsInput | string
   milestoneId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserProgressUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  roadmapId?: Prisma.StringFieldUpdateOperationsInput | string
   milestoneId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type UserProgressCreateManyRoadmapInput = {
+  id?: string
+  userId: string
+  milestoneId: string
+  completed?: boolean
+  isEnrolled?: boolean
+}
+
+export type UserProgressUpdateWithoutRoadmapInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  user?: Prisma.UserUpdateOneRequiredWithoutProgressNestedInput
+  milestone?: Prisma.MilestoneUpdateOneRequiredWithoutProgressNestedInput
+}
+
+export type UserProgressUncheckedUpdateWithoutRoadmapInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  milestoneId?: Prisma.StringFieldUpdateOperationsInput | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type UserProgressUncheckedUpdateManyWithoutRoadmapInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  milestoneId?: Prisma.StringFieldUpdateOperationsInput | string
+  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserProgressCreateManyMilestoneInput = {
   id?: string
   userId: string
+  roadmapId: string
   completed?: boolean
+  isEnrolled?: boolean
 }
 
 export type UserProgressUpdateWithoutMilestoneInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutProgressNestedInput
+  roadmap?: Prisma.RoadmapUpdateOneRequiredWithoutUserProgressNestedInput
 }
 
 export type UserProgressUncheckedUpdateWithoutMilestoneInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  roadmapId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserProgressUncheckedUpdateManyWithoutMilestoneInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  roadmapId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEnrolled?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -537,10 +725,13 @@ export type UserProgressUncheckedUpdateManyWithoutMilestoneInput = {
 export type UserProgressSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  roadmapId?: boolean
   milestoneId?: boolean
   completed?: boolean
+  isEnrolled?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   milestone?: boolean | Prisma.MilestoneDefaultArgs<ExtArgs>
+  roadmap?: boolean | Prisma.RoadmapDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProgress"]>
 
 
@@ -548,14 +739,17 @@ export type UserProgressSelect<ExtArgs extends runtime.Types.Extensions.Internal
 export type UserProgressSelectScalar = {
   id?: boolean
   userId?: boolean
+  roadmapId?: boolean
   milestoneId?: boolean
   completed?: boolean
+  isEnrolled?: boolean
 }
 
-export type UserProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "milestoneId" | "completed", ExtArgs["result"]["userProgress"]>
+export type UserProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "roadmapId" | "milestoneId" | "completed" | "isEnrolled", ExtArgs["result"]["userProgress"]>
 export type UserProgressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   milestone?: boolean | Prisma.MilestoneDefaultArgs<ExtArgs>
+  roadmap?: boolean | Prisma.RoadmapDefaultArgs<ExtArgs>
 }
 
 export type $UserProgressPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -563,12 +757,15 @@ export type $UserProgressPayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     milestone: Prisma.$MilestonePayload<ExtArgs>
+    roadmap: Prisma.$RoadmapPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
+    roadmapId: string
     milestoneId: string
     completed: boolean
+    isEnrolled: boolean
   }, ExtArgs["result"]["userProgress"]>
   composites: {}
 }
@@ -911,6 +1108,7 @@ export interface Prisma__UserProgressClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   milestone<T extends Prisma.MilestoneDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MilestoneDefaultArgs<ExtArgs>>): Prisma.Prisma__MilestoneClient<runtime.Types.Result.GetResult<Prisma.$MilestonePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  roadmap<T extends Prisma.RoadmapDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RoadmapDefaultArgs<ExtArgs>>): Prisma.Prisma__RoadmapClient<runtime.Types.Result.GetResult<Prisma.$RoadmapPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -942,8 +1140,10 @@ export interface Prisma__UserProgressClient<T, Null = never, ExtArgs extends run
 export interface UserProgressFieldRefs {
   readonly id: Prisma.FieldRef<"UserProgress", 'String'>
   readonly userId: Prisma.FieldRef<"UserProgress", 'String'>
+  readonly roadmapId: Prisma.FieldRef<"UserProgress", 'String'>
   readonly milestoneId: Prisma.FieldRef<"UserProgress", 'String'>
   readonly completed: Prisma.FieldRef<"UserProgress", 'Boolean'>
+  readonly isEnrolled: Prisma.FieldRef<"UserProgress", 'Boolean'>
 }
     
 

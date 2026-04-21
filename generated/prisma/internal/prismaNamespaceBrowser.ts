@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  PasswordResetToken: 'PasswordResetToken',
   Category: 'Category',
   Roadmap: 'Roadmap',
   Milestone: 'Milestone',
@@ -85,6 +86,16 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  token: 'token',
+  expires: 'expires'
+} as const
+
+export type PasswordResetTokenScalarFieldEnum = (typeof PasswordResetTokenScalarFieldEnum)[keyof typeof PasswordResetTokenScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {
@@ -127,8 +138,10 @@ export type MilestoneScalarFieldEnum = (typeof MilestoneScalarFieldEnum)[keyof t
 export const UserProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  roadmapId: 'roadmapId',
   milestoneId: 'milestoneId',
-  completed: 'completed'
+  completed: 'completed',
+  isEnrolled: 'isEnrolled'
 } as const
 
 export type UserProgressScalarFieldEnum = (typeof UserProgressScalarFieldEnum)[keyof typeof UserProgressScalarFieldEnum]
@@ -173,6 +186,15 @@ export const UserOrderByRelevanceFieldEnum = {
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
 
 
+export const PasswordResetTokenOrderByRelevanceFieldEnum = {
+  id: 'id',
+  email: 'email',
+  token: 'token'
+} as const
+
+export type PasswordResetTokenOrderByRelevanceFieldEnum = (typeof PasswordResetTokenOrderByRelevanceFieldEnum)[keyof typeof PasswordResetTokenOrderByRelevanceFieldEnum]
+
+
 export const CategoryOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -208,6 +230,7 @@ export type MilestoneOrderByRelevanceFieldEnum = (typeof MilestoneOrderByRelevan
 export const UserProgressOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
+  roadmapId: 'roadmapId',
   milestoneId: 'milestoneId'
 } as const
 

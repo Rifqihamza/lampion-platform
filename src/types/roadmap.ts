@@ -1,25 +1,21 @@
-export interface ExploreCategory {
-    id: string;
-    name: string;
-    slug: string;
-}
 
-export type Difficulty = "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
 
-export interface ExploreMilestone {
-    id: string;
-    title: string;
-    order: number;
-}
+import { Prisma } from "../../generated/prisma/client";
+/**
+ * Roadmap dengan relasi lengkap untuk Explore Page
+ */
+export type RoadmapWithRelations =
+    Prisma.RoadmapGetPayload<{
+        include: {
+            category: true;
+            milestones: {
+                orderBy: { order: "asc" };
+            };
+        };
+    }>;
 
-export interface ExploreRoadmap {
-    id: string;
-    title: string;
-    slug: string;
-    description: string;
-    difficulty: Difficulty;
-    duration: string;
-
-    category: ExploreCategory;
-    milestones: ExploreMilestone[];
-}
+/**
+ * Category type
+ */
+export type CategoryType =
+    Prisma.CategoryGetPayload<object>;
