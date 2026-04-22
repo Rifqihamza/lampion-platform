@@ -10,7 +10,7 @@ import { Toaster } from "@/components/ui/sonner";
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: "Lampion",
+  title: "Lampion Platform - Universal Learning Platform",
   description: "Universal Learning Platform",
 };
 

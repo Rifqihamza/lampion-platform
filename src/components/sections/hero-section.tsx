@@ -7,7 +7,7 @@ export default function HeroSection() {
     return (
         <section id="home-section" className="w-full h-dvh flex items-center justify-center py-20 px-4 text-center">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-5xl font-extrabold tracking-tight mb-4">
+                <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
                     Belajar <span className="text-primary">Terarah</span>, Masa Depan <span className="text-primary">Cerah</span>.
                 </h1>
                 <p className="text-lg text-foreground mb-10 leading-relaxed">
@@ -29,7 +29,7 @@ export default function HeroSection() {
                     </Button>
                 </div>
                 <div className="w-full flex items-center justify-center mt-6">
-                    <Link href={"#about-section"}>
+                    <Link href={"#learningPath-section"}>
                         <ChevronDown size={24} className="animate-bounce" />
                     </Link>
                 </div>

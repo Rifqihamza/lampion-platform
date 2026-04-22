@@ -30,7 +30,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 
   return (
     <div className={cn("flex flex-col justify-center gap-4", className)} {...props}>
-      <Card className="w-full relative rounded-xl bg-primary/5 backdrop-blur-sm py-6 px-4">
+      <Card className="w-full relative rounded-xl bg-card/50 backdrop-blur-xl py-6 px-4">
         <Link
           href="/"
           className="absolute top-5 left-5 text-muted-foreground hover:text-foreground">
@@ -66,6 +66,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
               <Input
                 {...register("password")}
                 type="password"
+                autoComplete="none"
                 className={errors.password ? "border-destructive" : ""}
                 disabled={isLoading}
               />

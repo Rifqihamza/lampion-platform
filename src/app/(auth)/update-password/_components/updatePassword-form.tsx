@@ -32,7 +32,7 @@ export function UpdatePassForm({ token, className }: ResetFormProps) {
 
     return (
         <div className={cn("flex flex-col justify-center gap-4", className)}>
-            <Card className="w-full relative rounded-xl bg-primary/5 backdrop-blur-sm py-6 px-4 border-none shadow-none">
+            <Card className="w-full relative rounded-xl bg-card/50 backdrop-blur-xl py-6 px-4 border-none shadow-none">
                 <CardHeader className="text-center">
                     <div className="flex justify-center mb-2 text-primary">
                         <ShieldCheck size={40} />

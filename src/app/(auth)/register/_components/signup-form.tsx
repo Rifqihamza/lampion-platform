@@ -46,7 +46,7 @@ export function SignupForm({
   return (
     <>
       <div className={cn("flex flex-col justify-center gap-4", className)} {...props}>
-        <Card className="w-full relative rounded-xl bg-primary/5 backdrop-blur-sm py-6 px-4">
+        <Card className="w-full relative rounded-xl bg-card/50 backdrop-blur-xl py-6 px-4">
           <Link
             href="/"
             className="absolute top-5 left-5 text-muted-foreground hover:text-foreground transition-colors"
@@ -84,7 +84,7 @@ export function SignupForm({
                   {...register("email")}
                   type="email"
                   placeholder="nama@email.com"
-                  className={cn(errors.email ? "border-destructive" : "bg-zinc-950/20")}
+                  className={cn(errors.email ? "border-destructive" : "bg-primary/10")}
                   disabled={isLoading}
                 />
                 {errors.email && (
@@ -100,7 +100,7 @@ export function SignupForm({
                     {...register("password")}
                     type="password"
                     placeholder="••••••••"
-                    className={cn(errors.password ? "border-destructive" : "bg-zinc-950/20")}
+                    className={cn(errors.password ? "border-destructive" : "bg-primary/10")}
                     disabled={isLoading}
                   />
                 </div>
@@ -110,13 +110,12 @@ export function SignupForm({
                     {...register("confirmPassword")}
                     type="password"
                     placeholder="••••••••"
-                    className={cn(errors.confirmPassword ? "border-destructive" : "bg-zinc-950/20")}
+                    className={cn(errors.confirmPassword ? "border-destructive" : "bg-primary/10")}
                     disabled={isLoading}
                   />
                 </div>
               </div>
 
-              {/* ✅ Tampilkan error password & confirmPassword secara terpisah agar lebih jelas */}
               {errors.password && (
                 <p className="text-sm font-medium text-destructive">{errors.password.message}</p>
               )}

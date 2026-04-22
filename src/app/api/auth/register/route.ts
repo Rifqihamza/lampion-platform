@@ -64,7 +64,7 @@ export async function POST(req: Request) {
             errorMessage.includes("timeout")
         ) {
             return NextResponse.json(
-                { message: "Server sedang sibuk (Database Timeout). Coba lagi nanti." },
+                { message: "Layanan tidak tersedia. Coba lagi nanti (Timeout)." },
                 { status: 503 }
             );
         }

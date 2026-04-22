@@ -36,7 +36,7 @@ export function ForgotPasswordForm({ className, ...props }: React.ComponentProps
 
     return (
         <div className={cn("flex flex-col justify-center gap-4", className)} {...props}>
-            <Card className="w-full relative rounded-xl bg-primary/5 backdrop-blur-xl py-6 px-4 border-white/10 shadow-2xl">
+            <Card className="w-full relative rounded-xl bg-card/50 backdrop-blur-xl py-6 px-4">
                 <Link
                     href="/login"
                     className="absolute top-5 left-5 text-muted-foreground hover:text-primary transition-colors"

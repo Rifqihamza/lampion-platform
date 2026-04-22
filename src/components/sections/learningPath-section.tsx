@@ -7,7 +7,7 @@ import Link from "next/link"
 export default function LearningPathPage() {
     return (
         <section id="learningPath-section" className="w-full min-h-svh flex items-center justify-center">
-            <div className="max-w-5xl w-full grid md:grid-cols-2 gap-12 items-center">
+            <div className="max-w-5xl w-full grid md:grid-cols-2 gap-12 items-center px-4 md:px-0">
 
                 {/* Kiri: Penjelasan & CTA */}
                 <div className="space-y-6 text-left">

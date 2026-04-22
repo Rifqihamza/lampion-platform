@@ -1,5 +1,5 @@
 import HeroSection from "@/components/sections/hero-section";
-import LearningPathPage from "@/components/sections/explore-section";
+import LearningPathPage from "@/components/sections/learningPath-section";
 import TimelineSection from "@/components/sections/timeline-section";
 export default function Main() {
     return (
@@ -11,4 +11,5 @@ export default function Main() {
             </main>
         </>
     )
+
 }
