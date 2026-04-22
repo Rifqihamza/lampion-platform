@@ -167,83 +167,18 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
 export const NullsOrder = {
   first: 'first',
   last: 'last'
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const UserOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  password: 'password',
-  image: 'image'
-} as const
-
-export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
-
-
-export const PasswordResetTokenOrderByRelevanceFieldEnum = {
-  id: 'id',
-  email: 'email',
-  token: 'token'
-} as const
-
-export type PasswordResetTokenOrderByRelevanceFieldEnum = (typeof PasswordResetTokenOrderByRelevanceFieldEnum)[keyof typeof PasswordResetTokenOrderByRelevanceFieldEnum]
-
-
-export const CategoryOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  slug: 'slug'
-} as const
-
-export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum]
-
-
-export const RoadmapOrderByRelevanceFieldEnum = {
-  id: 'id',
-  title: 'title',
-  slug: 'slug',
-  description: 'description',
-  duration: 'duration',
-  categoryId: 'categoryId'
-} as const
-
-export type RoadmapOrderByRelevanceFieldEnum = (typeof RoadmapOrderByRelevanceFieldEnum)[keyof typeof RoadmapOrderByRelevanceFieldEnum]
-
-
-export const MilestoneOrderByRelevanceFieldEnum = {
-  id: 'id',
-  title: 'title',
-  description: 'description',
-  contentUrl: 'contentUrl',
-  roadmapId: 'roadmapId'
-} as const
-
-export type MilestoneOrderByRelevanceFieldEnum = (typeof MilestoneOrderByRelevanceFieldEnum)[keyof typeof MilestoneOrderByRelevanceFieldEnum]
-
-
-export const UserProgressOrderByRelevanceFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  roadmapId: 'roadmapId',
-  milestoneId: 'milestoneId'
-} as const
-
-export type UserProgressOrderByRelevanceFieldEnum = (typeof UserProgressOrderByRelevanceFieldEnum)[keyof typeof UserProgressOrderByRelevanceFieldEnum]
-
-
-export const AIChatHistoryOrderByRelevanceFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  milestoneId: 'milestoneId',
-  question: 'question',
-  answer: 'answer'
-} as const
-
-export type AIChatHistoryOrderByRelevanceFieldEnum = (typeof AIChatHistoryOrderByRelevanceFieldEnum)[keyof typeof AIChatHistoryOrderByRelevanceFieldEnum]
 

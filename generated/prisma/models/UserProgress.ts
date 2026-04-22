@@ -205,7 +205,6 @@ export type UserProgressOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   milestone?: Prisma.MilestoneOrderByWithRelationInput
   roadmap?: Prisma.RoadmapOrderByWithRelationInput
-  _relevance?: Prisma.UserProgressOrderByRelevanceInput
 }
 
 export type UserProgressWhereUniqueInput = Prisma.AtLeast<{
@@ -316,12 +315,6 @@ export type UserProgressListRelationFilter = {
 
 export type UserProgressOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type UserProgressOrderByRelevanceInput = {
-  fields: Prisma.UserProgressOrderByRelevanceFieldEnum | Prisma.UserProgressOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type UserProgressUserIdMilestoneIdCompoundUniqueInput = {
@@ -734,7 +727,29 @@ export type UserProgressSelect<ExtArgs extends runtime.Types.Extensions.Internal
   roadmap?: boolean | Prisma.RoadmapDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProgress"]>
 
+export type UserProgressSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  roadmapId?: boolean
+  milestoneId?: boolean
+  completed?: boolean
+  isEnrolled?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  milestone?: boolean | Prisma.MilestoneDefaultArgs<ExtArgs>
+  roadmap?: boolean | Prisma.RoadmapDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["userProgress"]>
 
+export type UserProgressSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  roadmapId?: boolean
+  milestoneId?: boolean
+  completed?: boolean
+  isEnrolled?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  milestone?: boolean | Prisma.MilestoneDefaultArgs<ExtArgs>
+  roadmap?: boolean | Prisma.RoadmapDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["userProgress"]>
 
 export type UserProgressSelectScalar = {
   id?: boolean
@@ -747,6 +762,16 @@ export type UserProgressSelectScalar = {
 
 export type UserProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "roadmapId" | "milestoneId" | "completed" | "isEnrolled", ExtArgs["result"]["userProgress"]>
 export type UserProgressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  milestone?: boolean | Prisma.MilestoneDefaultArgs<ExtArgs>
+  roadmap?: boolean | Prisma.RoadmapDefaultArgs<ExtArgs>
+}
+export type UserProgressIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  milestone?: boolean | Prisma.MilestoneDefaultArgs<ExtArgs>
+  roadmap?: boolean | Prisma.RoadmapDefaultArgs<ExtArgs>
+}
+export type UserProgressIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   milestone?: boolean | Prisma.MilestoneDefaultArgs<ExtArgs>
   roadmap?: boolean | Prisma.RoadmapDefaultArgs<ExtArgs>
@@ -884,6 +909,30 @@ export interface UserProgressDelegate<ExtArgs extends runtime.Types.Extensions.I
   createMany<T extends UserProgressCreateManyArgs>(args?: Prisma.SelectSubset<T, UserProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many UserProgresses and returns the data saved in the database.
+   * @param {UserProgressCreateManyAndReturnArgs} args - Arguments to create many UserProgresses.
+   * @example
+   * // Create many UserProgresses
+   * const userProgress = await prisma.userProgress.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many UserProgresses and only return the `id`
+   * const userProgressWithIdOnly = await prisma.userProgress.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends UserProgressCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, UserProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a UserProgress.
    * @param {UserProgressDeleteArgs} args - Arguments to delete one UserProgress.
    * @example
@@ -946,6 +995,36 @@ export interface UserProgressDelegate<ExtArgs extends runtime.Types.Extensions.I
    * 
    */
   updateMany<T extends UserProgressUpdateManyArgs>(args: Prisma.SelectSubset<T, UserProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more UserProgresses and returns the data updated in the database.
+   * @param {UserProgressUpdateManyAndReturnArgs} args - Arguments to update many UserProgresses.
+   * @example
+   * // Update many UserProgresses
+   * const userProgress = await prisma.userProgress.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more UserProgresses and only return the `id`
+   * const userProgressWithIdOnly = await prisma.userProgress.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends UserProgressUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, UserProgressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one UserProgress.
@@ -1382,6 +1461,29 @@ export type UserProgressCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
+ * UserProgress createManyAndReturn
+ */
+export type UserProgressCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserProgress
+   */
+  select?: Prisma.UserProgressSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserProgress
+   */
+  omit?: Prisma.UserProgressOmit<ExtArgs> | null
+  /**
+   * The data used to create many UserProgresses.
+   */
+  data: Prisma.UserProgressCreateManyInput | Prisma.UserProgressCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserProgressIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * UserProgress update
  */
 export type UserProgressUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1423,6 +1525,36 @@ export type UserProgressUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many UserProgresses to update.
    */
   limit?: number
+}
+
+/**
+ * UserProgress updateManyAndReturn
+ */
+export type UserProgressUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserProgress
+   */
+  select?: Prisma.UserProgressSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserProgress
+   */
+  omit?: Prisma.UserProgressOmit<ExtArgs> | null
+  /**
+   * The data used to update UserProgresses.
+   */
+  data: Prisma.XOR<Prisma.UserProgressUpdateManyMutationInput, Prisma.UserProgressUncheckedUpdateManyInput>
+  /**
+   * Filter which UserProgresses to update
+   */
+  where?: Prisma.UserProgressWhereInput
+  /**
+   * Limit how many UserProgresses to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserProgressIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -223,7 +223,6 @@ export type RoadmapOrderByWithRelationInput = {
   category?: Prisma.CategoryOrderByWithRelationInput
   milestones?: Prisma.MilestoneOrderByRelationAggregateInput
   userProgress?: Prisma.UserProgressOrderByRelationAggregateInput
-  _relevance?: Prisma.RoadmapOrderByRelevanceInput
 }
 
 export type RoadmapWhereUniqueInput = Prisma.AtLeast<{
@@ -363,12 +362,6 @@ export type RoadmapListRelationFilter = {
 
 export type RoadmapOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type RoadmapOrderByRelevanceInput = {
-  fields: Prisma.RoadmapOrderByRelevanceFieldEnum | Prisma.RoadmapOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type RoadmapCountOrderByAggregateInput = {
@@ -774,7 +767,29 @@ export type RoadmapSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   _count?: boolean | Prisma.RoadmapCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["roadmap"]>
 
+export type RoadmapSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  title?: boolean
+  slug?: boolean
+  description?: boolean
+  difficulty?: boolean
+  duration?: boolean
+  categoryId?: boolean
+  createdAt?: boolean
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["roadmap"]>
 
+export type RoadmapSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  title?: boolean
+  slug?: boolean
+  description?: boolean
+  difficulty?: boolean
+  duration?: boolean
+  categoryId?: boolean
+  createdAt?: boolean
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["roadmap"]>
 
 export type RoadmapSelectScalar = {
   id?: boolean
@@ -793,6 +808,12 @@ export type RoadmapInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   milestones?: boolean | Prisma.Roadmap$milestonesArgs<ExtArgs>
   userProgress?: boolean | Prisma.Roadmap$userProgressArgs<ExtArgs>
   _count?: boolean | Prisma.RoadmapCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type RoadmapIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+}
+export type RoadmapIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
 }
 
 export type $RoadmapPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -929,6 +950,30 @@ export interface RoadmapDelegate<ExtArgs extends runtime.Types.Extensions.Intern
   createMany<T extends RoadmapCreateManyArgs>(args?: Prisma.SelectSubset<T, RoadmapCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Roadmaps and returns the data saved in the database.
+   * @param {RoadmapCreateManyAndReturnArgs} args - Arguments to create many Roadmaps.
+   * @example
+   * // Create many Roadmaps
+   * const roadmap = await prisma.roadmap.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Roadmaps and only return the `id`
+   * const roadmapWithIdOnly = await prisma.roadmap.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends RoadmapCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, RoadmapCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoadmapPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Roadmap.
    * @param {RoadmapDeleteArgs} args - Arguments to delete one Roadmap.
    * @example
@@ -991,6 +1036,36 @@ export interface RoadmapDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    * 
    */
   updateMany<T extends RoadmapUpdateManyArgs>(args: Prisma.SelectSubset<T, RoadmapUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Roadmaps and returns the data updated in the database.
+   * @param {RoadmapUpdateManyAndReturnArgs} args - Arguments to update many Roadmaps.
+   * @example
+   * // Update many Roadmaps
+   * const roadmap = await prisma.roadmap.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Roadmaps and only return the `id`
+   * const roadmapWithIdOnly = await prisma.roadmap.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends RoadmapUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, RoadmapUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoadmapPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Roadmap.
@@ -1429,6 +1504,29 @@ export type RoadmapCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Roadmap createManyAndReturn
+ */
+export type RoadmapCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Roadmap
+   */
+  select?: Prisma.RoadmapSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Roadmap
+   */
+  omit?: Prisma.RoadmapOmit<ExtArgs> | null
+  /**
+   * The data used to create many Roadmaps.
+   */
+  data: Prisma.RoadmapCreateManyInput | Prisma.RoadmapCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RoadmapIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * Roadmap update
  */
 export type RoadmapUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1470,6 +1568,36 @@ export type RoadmapUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Roadmaps to update.
    */
   limit?: number
+}
+
+/**
+ * Roadmap updateManyAndReturn
+ */
+export type RoadmapUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Roadmap
+   */
+  select?: Prisma.RoadmapSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Roadmap
+   */
+  omit?: Prisma.RoadmapOmit<ExtArgs> | null
+  /**
+   * The data used to update Roadmaps.
+   */
+  data: Prisma.XOR<Prisma.RoadmapUpdateManyMutationInput, Prisma.RoadmapUncheckedUpdateManyInput>
+  /**
+   * Filter which Roadmaps to update
+   */
+  where?: Prisma.RoadmapWhereInput
+  /**
+   * Limit how many Roadmaps to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RoadmapIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

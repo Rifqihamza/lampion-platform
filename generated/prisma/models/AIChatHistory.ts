@@ -201,7 +201,6 @@ export type AIChatHistoryOrderByWithRelationInput = {
   answer?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  _relevance?: Prisma.AIChatHistoryOrderByRelevanceInput
 }
 
 export type AIChatHistoryWhereUniqueInput = Prisma.AtLeast<{
@@ -311,12 +310,6 @@ export type AIChatHistoryListRelationFilter = {
 
 export type AIChatHistoryOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type AIChatHistoryOrderByRelevanceInput = {
-  fields: Prisma.AIChatHistoryOrderByRelevanceFieldEnum | Prisma.AIChatHistoryOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type AIChatHistoryCountOrderByAggregateInput = {
@@ -486,7 +479,25 @@ export type AIChatHistorySelect<ExtArgs extends runtime.Types.Extensions.Interna
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aIChatHistory"]>
 
+export type AIChatHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  milestoneId?: boolean
+  question?: boolean
+  answer?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["aIChatHistory"]>
 
+export type AIChatHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  userId?: boolean
+  milestoneId?: boolean
+  question?: boolean
+  answer?: boolean
+  createdAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["aIChatHistory"]>
 
 export type AIChatHistorySelectScalar = {
   id?: boolean
@@ -499,6 +510,12 @@ export type AIChatHistorySelectScalar = {
 
 export type AIChatHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "milestoneId" | "question" | "answer" | "createdAt", ExtArgs["result"]["aIChatHistory"]>
 export type AIChatHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type AIChatHistoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+}
+export type AIChatHistoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
@@ -632,6 +649,30 @@ export interface AIChatHistoryDelegate<ExtArgs extends runtime.Types.Extensions.
   createMany<T extends AIChatHistoryCreateManyArgs>(args?: Prisma.SelectSubset<T, AIChatHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many AIChatHistories and returns the data saved in the database.
+   * @param {AIChatHistoryCreateManyAndReturnArgs} args - Arguments to create many AIChatHistories.
+   * @example
+   * // Create many AIChatHistories
+   * const aIChatHistory = await prisma.aIChatHistory.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many AIChatHistories and only return the `id`
+   * const aIChatHistoryWithIdOnly = await prisma.aIChatHistory.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends AIChatHistoryCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, AIChatHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIChatHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a AIChatHistory.
    * @param {AIChatHistoryDeleteArgs} args - Arguments to delete one AIChatHistory.
    * @example
@@ -694,6 +735,36 @@ export interface AIChatHistoryDelegate<ExtArgs extends runtime.Types.Extensions.
    * 
    */
   updateMany<T extends AIChatHistoryUpdateManyArgs>(args: Prisma.SelectSubset<T, AIChatHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more AIChatHistories and returns the data updated in the database.
+   * @param {AIChatHistoryUpdateManyAndReturnArgs} args - Arguments to update many AIChatHistories.
+   * @example
+   * // Update many AIChatHistories
+   * const aIChatHistory = await prisma.aIChatHistory.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more AIChatHistories and only return the `id`
+   * const aIChatHistoryWithIdOnly = await prisma.aIChatHistory.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends AIChatHistoryUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, AIChatHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIChatHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one AIChatHistory.
@@ -1128,6 +1199,29 @@ export type AIChatHistoryCreateManyArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
+ * AIChatHistory createManyAndReturn
+ */
+export type AIChatHistoryCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AIChatHistory
+   */
+  select?: Prisma.AIChatHistorySelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the AIChatHistory
+   */
+  omit?: Prisma.AIChatHistoryOmit<ExtArgs> | null
+  /**
+   * The data used to create many AIChatHistories.
+   */
+  data: Prisma.AIChatHistoryCreateManyInput | Prisma.AIChatHistoryCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIChatHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * AIChatHistory update
  */
 export type AIChatHistoryUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1169,6 +1263,36 @@ export type AIChatHistoryUpdateManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many AIChatHistories to update.
    */
   limit?: number
+}
+
+/**
+ * AIChatHistory updateManyAndReturn
+ */
+export type AIChatHistoryUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AIChatHistory
+   */
+  select?: Prisma.AIChatHistorySelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the AIChatHistory
+   */
+  omit?: Prisma.AIChatHistoryOmit<ExtArgs> | null
+  /**
+   * The data used to update AIChatHistories.
+   */
+  data: Prisma.XOR<Prisma.AIChatHistoryUpdateManyMutationInput, Prisma.AIChatHistoryUncheckedUpdateManyInput>
+  /**
+   * Filter which AIChatHistories to update
+   */
+  where?: Prisma.AIChatHistoryWhereInput
+  /**
+   * Limit how many AIChatHistories to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AIChatHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
