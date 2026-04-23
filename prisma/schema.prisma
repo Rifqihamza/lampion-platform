@@ -27,6 +27,7 @@ enum MilestoneType {
 model User {
   id        String   @id @default(cuid())
   name      String?
+  // username String?
   email     String   @unique
   password  String?
   image     String?

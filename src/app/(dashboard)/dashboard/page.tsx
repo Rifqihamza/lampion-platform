@@ -106,13 +106,27 @@ export default async function DashboardPage() {
             progress: total > 0 ? Math.round((completed / total) * 100) : 0
         }
     });
+
+    const time = new Date().getHours()
+    let greeting;
+
+    if (time < 12) {
+        greeting = "Selamat Pagi ☀️";
+    } else if (time < 18) {
+        greeting = "Selamat Siang 🌤️";
+    } else {
+        greeting = "Selamat Malam 🌙";
+    }
+
     return (
         <div className="p-6 space-y-8">
             {/* Header */}
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">
-                    Wilujeng Sumping, {session.user?.name?.split(" ")[0]}! 🏮
+                    {greeting}, {session.user?.name?.split(" ")[1]}!
                 </h1>
+                <h2 className="text-2xl font-semibold tracking-tight">
+                </h2>
                 <p className="text-muted-foreground">
                     Lanjutkan perjalanan belajarmu hari ini.
                 </p>
@@ -174,7 +188,7 @@ export default async function DashboardPage() {
                 </Card>
 
                 {/* Sidebar/Info Card */}
-                <Card className="col-span-3 border-border/50 bg-linear-to-br from-red-500/5 to-purple-500/5">
+                <Card className="col-span-4 md:col-span-3 border-border/50 bg-linear-to-br from-red-500/5 to-purple-500/5">
                     <CardHeader>
                         <CardTitle>Misi Mingguan</CardTitle>
                     </CardHeader>

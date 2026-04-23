@@ -11,6 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 
 export default async function Navbar() {
     const session = await auth();
@@ -18,15 +19,16 @@ export default async function Navbar() {
     return (
         <NavbarWrapper>
             {/* ================= LEFT ================= */}
-            <div className="flex items-baseline gap-6 md:gap-10 relative">
+            <div className="flex items-baseline-last gap-4 md:gap-10 relative">
                 <Link
                     href="/"
-                    className="font-bold text-2xl tracking-tighter bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent"
+                    className="font-bold text-2xl tracking-tighter flex items-center"
                 >
+                    <Image src={"/apple-touch-icon.png"} alt="Icon Navbar" width={40} height={40} />
                     Lampion
                 </Link>
 
-                <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+                <div className="hidden md:flex items-center gap-4 text-sm font-medium">
                     <Link
                         href="/"
                         className="hover:text-primary transition-colors relative group">
@@ -68,14 +70,14 @@ export default async function Navbar() {
                 {session ? (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Avatar className="h-10 w-10 cursor-pointer border border-primary">
+                            <Avatar className="h-10 w-10 cursor-pointer ring-2 ring-primary">
                                 <AvatarImage src={session.user?.image || ""} />
                                 <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
                             </Avatar>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-full flex flex-col justify-center">
                             <DropdownMenuLabel className="flex flex-row items-center gap-2">
-                                <Avatar className="h-10 w-10 cursor-pointer border border-primary">
+                                <Avatar className="h-10 w-10 cursor-pointer ring-2 ring-primary">
                                     <AvatarImage src={session.user?.image || ""} />
                                     <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
                                 </Avatar>
@@ -106,10 +108,10 @@ export default async function Navbar() {
                     </DropdownMenu>
                 ) : (
                     <div className="flex items-center gap-2">
-                        <Button variant="ghost" asChild>
+                        <Button size={"lg"} variant="ghost" asChild>
                             <Link href="/login">Sign In</Link>
                         </Button>
-                        <Button asChild className="bg-primary text-foreground hover:bg-primary/90">
+                        <Button size={"lg"} asChild className="bg-primary text-foreground hover:bg-primary/90">
                             <Link href="/register">Sign Up</Link>
                         </Button>
                     </div>

@@ -14,7 +14,8 @@ export default function RoadmapCard({
     }
     return (
         <Link href={`/roadmap/${roadmap.slug}`} className="group">
-            <div className="h-full p-5 rounded-xl bg-secondary/10 backdrop-blur-xl border border-white/5 hover:border-primary/50 transition-all duration-300 flex flex-col justify-between">
+            <div className="relative overflow-hidden h-full p-5 rounded-xl bg-secondary/5 backdrop-blur-xl border border-white/5 hover:border-primary/50 transition-all duration-300 flex flex-col justify-between">
+                <div className="w-20 h-20 rounded-full bg-primary opacity-50 blur-[50px] absolute top-0 right-0" />
                 <div>
                     <div className="flex justify-between items-start mb-2">
                         <h2 className="text-lg font-semibold group-hover:text-primary transition-colors">

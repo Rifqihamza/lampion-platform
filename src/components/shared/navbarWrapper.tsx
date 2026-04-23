@@ -30,12 +30,18 @@ export default function NavbarWrapper({ children }: { children: React.ReactNode 
         >
             <div
                 className={cn(
-                    "w-full flex items-center justify-between px-6 transition-all duration-500",
+                    "w-full flex items-center justify-between px-6 transition-all duration-500 relative overflow-hidden",
                     isScrolled
-                        ? " py-3 bg-primary/5 backdrop-blur-md border border-primary/10 rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.3)]"
+                        ? " py-3 bg-background/5 backdrop-blur-md border border-border rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.3)]"
                         : " py-5 border-none"
                 )}
             >
+                <div className={cn("duration-500 transition-all w-100 h-100 rounded-full opacity-10 blur-3xl absolute bottom-0 right-0 bg-primary -z-10",
+                    isScrolled ? 'block' : 'bg-transparent'
+                )} />
+                <div className={cn("duration-500 transition-all w-100 h-100 rounded-full opacity-10 blur-3xl absolute top-0 left-0 bg-secondary -z-10",
+                    isScrolled ? 'block' : 'bg-transparent'
+                )} />
                 {children}
             </div>
         </motion.nav>
