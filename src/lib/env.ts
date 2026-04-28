@@ -38,27 +38,10 @@ if (!parsed.success) {
 
     // Di development hanya kasih warning, tidak throw error agar bisa jalan
     if (process.env.NODE_ENV === 'production') {
-        throw new Error('Invalid environment variables')
+        console.error("FAILED TO VALIDATE ENV IN PRODUCTION MODE");
     }
 
     console.warn('⚠️  Running in development mode with missing environment variables. Some features may not work.')
 }
 
-// Default fallback jika parsing gagal di development
-export const env = parsed.success ? parsed.data : {
-    NODE_ENV: 'development',
-    APP_URL: 'http://localhost:3000',
-    DATABASE_URL: '',
-    NEXTAUTH_SECRET: 'dev-secret-key-123456789012345678901234567890',
-    NEXTAUTH_URL: undefined,
-    AUTH_GOOGLE_ID: undefined,
-    AUTH_GOOGLE_SECRET: undefined,
-    SMTP_HOST: 'smtp.gmail.com',
-    SMTP_PORT: '587',
-    SMTP_USER: 'rifqihamza30@gmail.com',
-    SMTP_PASS: 'nspa kgqw dkrl oipp',
-    SMTP_FROM: 'Lampion Platform <support@lampion.id>',
-    OPENAI_API_KEY: undefined,
-    CORS_ORIGIN: '*',
-    RATE_LIMIT_MAX: 100,
-}
+export const env = parsed.success ? parsed.data : (process.env as unknown as z.infer<typeof envSchema>);
