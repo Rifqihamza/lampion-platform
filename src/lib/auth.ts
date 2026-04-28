@@ -1,16 +1,36 @@
-import NextAuth from "next-auth";
+import NextAuth, { type DefaultSession, type User, } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
+import { env } from "./env";
+
+// 1. Perluas interface User agar menyertakan emailVerified
+declare module "next-auth" {
+    interface User {
+        emailVerified?: boolean | Date | null;
+    }
+
+    interface Session {
+        user: {
+            id: string;
+            emailVerified?: boolean | Date | null;
+        } & DefaultSession["user"];
+    }
+
+    interface JWT {
+        id?: string;
+        emailVerified?: boolean | Date | null;
+    }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(prisma),
     providers: [
         Google({
-            clientId: process.env.AUTH_GOOGLE_ID,
-            clientSecret: process.env.AUTH_GOOGLE_SECRET,
+            clientId: env.AUTH_GOOGLE_ID,
+            clientSecret: env.AUTH_GOOGLE_SECRET,
         }),
         Credentials({
             name: "Credentials",
@@ -18,16 +38,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials) {
+            async authorize(credentials): Promise<User | null> {
                 if (!credentials?.email || !credentials?.password) return null;
 
                 const user = await prisma.user.findUnique({
                     where: { email: credentials.email as string },
                 });
 
-                // User tidak ditemukan
                 if (!user || !user.password) {
                     throw new Error("USER_NOT_FOUND");
+                }
+
+                if (!user.emailVerified) {
+                    throw new Error("EMAIL_NOT_VERIFIED");
                 }
 
                 const isValid = await bcrypt.compare(
@@ -35,30 +58,43 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     user.password
                 );
 
-                // Password salah
                 if (!isValid) {
                     throw new Error("INVALID_PASSWORD");
                 }
 
+                // Return object yang sesuai dengan interface User yang sudah di-extend
                 return {
                     id: user.id,
                     name: user.name,
                     email: user.email,
                     image: user.image,
+                    emailVerified: user.emailVerified,
                 };
             },
         }),
     ],
-    session: { strategy: "jwt" },
+    session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
+    secret: env.NEXTAUTH_SECRET,
+    trustHost: true,
     callbacks: {
+        async jwt({ token, user }) {
+            // User hanya tersedia saat login pertama kali (sign in)
+            if (user) {
+                token.id = user.id;
+                token.emailVerified = user.emailVerified as Date | null;
+            }
+            return token;
+        },
         async session({ session, token }) {
-            if (token?.sub && session.user) {
-                session.user.id = token.sub;
+            if (session.user) {
+                if (token.id) session.user.id = token.id as string;
+                session.user.emailVerified = token.emailVerified as Date | null;
             }
             return session;
         },
     },
     pages: {
         signIn: "/login",
+        error: "/login",
     },
 });
