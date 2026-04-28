@@ -65,6 +65,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     throw new Error("EMAIL_NOT_VERIFIED");
                 }
 
+                // Fix bug bcrypt di Node.js 22+
+                bcrypt.setRandomFallback((len) => Array.from(crypto.getRandomValues(new Uint8Array(len))));
+
                 const isValid = await bcrypt.compare(
                     credentials.password as string,
                     user.password
