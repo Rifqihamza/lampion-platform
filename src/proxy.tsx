@@ -58,7 +58,9 @@ export default async function middleware(request: NextRequest) {
 
     // If user is logged in and try to access auth routes, redirect to dashboard
     if (session && authRoutes.includes(pathname)) {
-        return NextResponse.redirect(new URL('/dashboard', request.url))
+        // Jika ada callbackUrl, redirect ke sana bukan ke dashboard
+        const callbackUrl = request.nextUrl.searchParams.get('callbackUrl')
+        return NextResponse.redirect(new URL(callbackUrl || '/dashboard', request.url))
     }
 
     // Protected Routes - redirect to login if not authenticated
@@ -72,7 +74,6 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    runtime: 'nodejs',
     matcher: [
         '/((?!_next/static|_next/image|favicon.ico|images|icons|fonts).*)',
     ],

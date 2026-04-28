@@ -1,13 +1,31 @@
-import { prisma } from "../src/lib/prisma"; // Sesuaikan path ke lib/prisma kamu
+import { prisma } from "../src/lib/prisma";
+import bcrypt from 'bcryptjs'
 
 async function main() {
     console.log("🏮 Start seeding Lampion data...");
 
-    // 1. Bersihkan Data Lama (Optional, tapi disarankan agar tidak duplikat slug)
+    // 1. Bersihkan Data Lama
     // Urutan delete penting untuk menghindari FK Constraint error
-    await prisma.milestone.deleteMany({});
-    await prisma.roadmap.deleteMany({});
-    await prisma.category.deleteMany({});
+    await prisma.verificationToken.deleteMany({})
+    await prisma.passwordResetToken.deleteMany({})
+    await prisma.aIChatHistory.deleteMany({})
+    await prisma.userProgress.deleteMany({})
+    await prisma.milestone.deleteMany({})
+    await prisma.roadmap.deleteMany({})
+    await prisma.category.deleteMany({})
+    await prisma.user.deleteMany({})
+
+    // 2. Buat Demo User
+    await prisma.user.create({
+        data: {
+            name: "Demo User",
+            email: "demo@lampion.id",
+            password: await bcrypt.hash("demo123", 12),
+            emailVerified: new Date(),
+        }
+    })
+
+    console.log("✅ Demo user created: demo@lampion.id / demo123")
 
     // 2. Create Categories
     const catWeb = await prisma.category.create({

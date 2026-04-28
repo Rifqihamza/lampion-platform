@@ -39,6 +39,15 @@ model User {
   @@index([email])
 }
 
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String   @unique
+  token   String   @unique
+  expires DateTime
+
+  @@map("verification_tokens")
+}
+
 model PasswordResetToken {
   id      String   @id @default(cuid())
   email   String   @unique

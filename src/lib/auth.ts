@@ -32,6 +32,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             Google({
                 clientId: env.AUTH_GOOGLE_ID,
                 clientSecret: env.AUTH_GOOGLE_SECRET,
+                async profile(profile) {
+                    return {
+                        id: profile.sub,
+                        name: profile.name,
+                        email: profile.email,
+                        image: profile.picture,
+                        emailVerified: new Date(),
+                    }
+                }
             })
         ] : []),
         Credentials({
@@ -51,7 +60,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     throw new Error("USER_NOT_FOUND");
                 }
 
-                if (!user.emailVerified) {
+                // Di development bypass email verification
+                if (env.NODE_ENV === 'production' && !user.emailVerified) {
                     throw new Error("EMAIL_NOT_VERIFIED");
                 }
 
