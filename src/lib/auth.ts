@@ -88,6 +88,35 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
     secret: env.NEXTAUTH_SECRET,
     trustHost: true,
+    cookies: {
+        sessionToken: {
+            name: `${env.NODE_ENV === 'production' ? '__Secure-' : ''}next-auth.session-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: env.NODE_ENV === 'production',
+                domain: env.NODE_ENV === 'production' && env.NEXTAUTH_URL ? `.${new URL(env.NEXTAUTH_URL).hostname}` : undefined,
+            },
+        },
+        callbackUrl: {
+            name: `${env.NODE_ENV === 'production' ? '__Secure-' : ''}next-auth.callback-url`,
+            options: {
+                sameSite: 'lax',
+                path: '/',
+                secure: env.NODE_ENV === 'production',
+            },
+        },
+        csrfToken: {
+            name: `${env.NODE_ENV === 'production' ? '__Host-' : ''}next-auth.csrf-token`,
+            options: {
+                httpOnly: true,
+                sameSite: 'lax',
+                path: '/',
+                secure: env.NODE_ENV === 'production',
+            },
+        },
+    },
     callbacks: {
         async jwt({ token, user }) {
             // User hanya tersedia saat login pertama kali (sign in)
