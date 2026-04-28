@@ -6,7 +6,7 @@ export default function RoadmapCard({
 }: {
     roadmap: ExploreRoadmap;
 }) {
-
+    // const session = await auth()
     const stats = roadmap.progress ?? {
         completedMilestones: 0,
         totalMilestones: roadmap.milestones.length,

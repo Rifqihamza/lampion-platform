@@ -18,7 +18,7 @@ const AlurSection = () => {
         <section id="timeline-section" className="py-24 px-6 flex flex-col w-full max-w-4xl mx-auto">
             <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                    Alur Belajar di <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">Lampion</span>
+                    Alur Belajar di Lampion
                 </h2>
                 <div className="h-1.5 w-24 bg-linear-to-r from-primary via-secondary to-primary mx-auto rounded-full shadow-[0_0_10px_rgba(234,179,8,0.2)]" />
             </div>

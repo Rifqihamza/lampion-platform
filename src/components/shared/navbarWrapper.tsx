@@ -22,7 +22,7 @@ export default function NavbarWrapper({ children }: { children: React.ReactNode 
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             className={cn(
-                "fixed left-0 right-0 w-dvw z-50 transition-all duration-500 ease-in-out px-4",
+                "fixed left-0 right-0 w-dvw z-50 transition-all duration-500 ease-in-out px-2",
                 isScrolled
                     ? "top-5 max-w-7xl mx-auto" // Menjadi lebih ramping saat scroll
                     : "top-0 max-w-full mx-auto" // Full width saat di atas

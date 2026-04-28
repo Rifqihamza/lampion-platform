@@ -6,8 +6,8 @@ export default function Footer() {
     const date = new Date().getFullYear();
 
     return (
-        <footer className="w-full max-w-7xl mx-auto -translate-y-5 px-4">
-            <div className="bg-background/10 backdrop-blur-sm p-8 relative rounded-2xl border border-white/5 shadow-[0_0_20px_rgba(153,27,27,0.1)]">
+        <footer className="w-full max-w-5xl mx-auto -translate-y-5 px-4">
+            <div className="bg-background/10 backdrop-blur-sm p-8 relative rounded-2xl border border-white/5 shadow-[0_0_25px_1px_#e79516]/20">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
 
                     {/* Brand Section */}

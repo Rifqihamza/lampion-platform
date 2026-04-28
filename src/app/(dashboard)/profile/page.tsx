@@ -9,17 +9,17 @@ export default async function Profile() {
     const session = await auth()
 
     return (
-        <section className="bg-card/50 backdrop-blur-sm p-5 rounded-2xl space-y-6">
+        <section className="w-full bg-primary/5 backdrop-blur-xs p-6 rounded-xl space-y-6">
             {/* Header */}
             <div className="space-y-2">
-                <h1 className="text-2xl font-bold tracking-tight">Profile Pengguna</h1>
+                <h1 className="text-2xl font-bold tracking-tight">Dashboard Profile</h1>
                 <Separator />
             </div>
 
             {/* Bento Grid */}
             <form className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Foto Profil */}
-                <div className="p-4 rounded-xl bg-card/50 backdrop-blur-sm space-y-4 col-span-1 items-center">
+                <div className="p-4 rounded-xl bg-card/60 backdrop-blur-sm space-y-4 col-span-1 items-center">
                     <h2 className="font-semibold">Foto Profil</h2>
                     <Avatar className="h-50 w-50 cursor-pointer ring-2 ring-primary mx-auto">
                         <AvatarImage src={session?.user?.image || "/placeholder-user.jpg"} />
@@ -31,7 +31,7 @@ export default async function Profile() {
                 </div>
 
                 {/* Data Pribadi */}
-                <div className="p-4 rounded-xl bg-card/50 backdrop-blur-sm space-y-4 col-span-2">
+                <div className="p-4 rounded-xl bg-card/60 backdrop-blur-sm space-y-4 col-span-1 md:col-span-2">
                     <h2 className="font-semibold">Data Pribadi</h2>
                     <div className="flex flex-col gap-2">
                         <label>Nama Lengkap</label>
@@ -58,7 +58,7 @@ export default async function Profile() {
                 </div>
 
                 {/* Kontak & Lokasi */}
-                <div className="p-4 rounded-xl bg-card/50 backdrop-blur-sm space-y-4 col-span-1">
+                <div className="p-4 rounded-xl bg-card/60 backdrop-blur-sm space-y-4 col-span-1">
                     <h2 className="font-semibold">Kontak & Lokasi</h2>
                     <div className="flex flex-col gap-2">
                         <label>No. Telepon</label>
@@ -71,20 +71,20 @@ export default async function Profile() {
                 </div>
 
                 {/* Identitas */}
-                <div className="p-4 rounded-xl bg-card/50 backdrop-blur-sm space-y-4 col-span-2">
+                <div className="p-4 rounded-xl bg-card/60 backdrop-blur-sm space-y-4 col-span-1 md:col-span-2">
                     <h2 className="font-semibold">Identitas</h2>
                     <div className="flex flex-col gap-2">
                         <label>Tempat Lahir</label>
                         <Input className="placeholder-muted-foreground! p-4 bg-primary/10! focus:ring-2! focus:ring-primary! duration-300" placeholder="Masukkan tempat lahir" />
                     </div>
-                    <div className="flex flex-row gap-4 ">
+                    <div className="flex flex-col md:flex-row gap-4 ">
                         <div className="flex flex-col gap-2">
                             <label>Tanggal Lahir</label>
                             <DatePicker className="placeholder-muted-foreground! p-4 bg-primary/10! focus:ring-2! focus:ring-primary! duration-300" />
                         </div>
                         <div className="flex flex-col gap-4">
                             <label>Jenis Kelamin</label>
-                            <div className="flex gap-6">
+                            <div className="flex flex-col md:flex-row gap-6">
                                 <label className="flex items-baseline gap-2">
                                     <input type="radio" name="gender" value="male" /> Laki-laki
                                 </label>
@@ -100,7 +100,7 @@ export default async function Profile() {
                 </div>
 
                 {/* Pendidikan & Pekerjaan */}
-                <div className="p-4 rounded-xl bg-card/50 backdrop-blur-sm space-y-4 col-span-3">
+                <div className="p-4 rounded-xl bg-card/60 backdrop-blur-sm space-y-4 col-span-1 md:col-span-3">
                     <h2 className="font-semibold">Pendidikan & Pekerjaan</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="flex flex-col gap-2">

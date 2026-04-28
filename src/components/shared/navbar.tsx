@@ -22,7 +22,7 @@ export default async function Navbar() {
             <div className="flex items-baseline-last gap-4 md:gap-10 relative">
                 <Link
                     href="/"
-                    className="font-bold text-2xl tracking-tighter flex items-center"
+                    className="font-bold text-2xl tracking-tighter flex items-center justify-start"
                 >
                     <Image src={"/apple-touch-icon.png"} alt="Icon Navbar" width={40} height={40} />
                     Lampion

@@ -18,24 +18,21 @@ export default function LearningPathPage() {
 
                     <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
                         Belajar Lebih Terarah dengan <br />
-                        <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        <span className="text-primary">
                             Learning Path Roadmap
                         </span>
                     </h1>
 
                     <p className="text-muted-foreground text-lg leading-relaxed">
-                        Tak perlu bingung mulai dari mana. Lampion menyusun langkah demi langkah kurikulum yang dipersonalisasi khusus untuk tujuan kariermu di dunia IT.
+                        Tak perlu bingung mulai dari mana. Lampion menyusun langkah demi langkah kurikulum yang dipersonalisasi khusus untuk tujuan kariermu.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    <div className="flex flex-col sm:flex-row gap-4 pt-1">
                         <Button size="lg" className="gap-2 group text-foreground" asChild>
                             <Link href="/explore">
                                 Explore Roadmap
                                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                             </Link>
-                        </Button>
-                        <Button size="lg" variant="outline">
-                            Lihat Demo
                         </Button>
                     </div>
                 </div>

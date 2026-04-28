@@ -15,7 +15,7 @@ export default function CategoryFilter({
     return (
         <div className="space-y-2">
             <h3 className="font-semibold">Kategori</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2 flex flex-wrap gap-2">
                 <li>
                     <Button
                         variant={selected === null || selected === "" ? "default" : "outline"}

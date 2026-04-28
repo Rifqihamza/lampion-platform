@@ -8,7 +8,7 @@ export default function HeroSection() {
         <section id="home-section" className="w-full h-dvh flex items-center justify-center py-20 px-4 text-center">
             <div className="max-w-4xl mx-auto">
                 <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-                    Belajar <span className="text-primary">Terarah</span>, Masa Depan <span className="text-primary">Cerah</span>.
+                    Terangi Langkahmu, Kuasai <span className="text-primary">Skill-mu</span>.
                 </h1>
                 <p className="text-lg text-foreground mb-10 leading-relaxed">
                     Lampion bantu kamu menemukan roadmap yang sudah dikurasi
