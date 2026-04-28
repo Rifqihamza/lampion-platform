@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer'
+import type SMTPTransport from 'nodemailer/lib/smtp-transport'
 import { env } from './env'
 
 const transporter = nodemailer.createTransport({
@@ -8,7 +9,7 @@ const transporter = nodemailer.createTransport({
         user: env.SMTP_USER,
         pass: env.SMTP_PASS,
     },
-})
+} as SMTPTransport.Options)
 
 interface EmailOptions {
     to: string
