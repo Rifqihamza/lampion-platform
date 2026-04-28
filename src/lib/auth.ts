@@ -28,10 +28,12 @@ declare module "next-auth" {
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(prisma),
     providers: [
-        Google({
-            clientId: env.AUTH_GOOGLE_ID,
-            clientSecret: env.AUTH_GOOGLE_SECRET,
-        }),
+        ...(env.AUTH_GOOGLE_ID && env.AUTH_GOOGLE_SECRET ? [
+            Google({
+                clientId: env.AUTH_GOOGLE_ID,
+                clientSecret: env.AUTH_GOOGLE_SECRET,
+            })
+        ] : []),
         Credentials({
             name: "Credentials",
             credentials: {
