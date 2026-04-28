@@ -19,7 +19,7 @@ const envSchema = z.object({
     SMTP_PORT: z.coerce.number(),
     SMTP_USER: z.string(),
     SMTP_PASS: z.string(),
-    SMTP_FROM: z.string().email(),
+    SMTP_FROM: z.string().min(1, "SMTP_FROM cannot be empty"),
 
     // OpenAI
     OPENAI_API_KEY: z.string().optional(),
