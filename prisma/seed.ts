@@ -20,6 +20,7 @@ async function main() {
         data: {
             name: "John Doe",
             email: "john@example.com",
+            password: "1tm1tr4101101",
             image: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
         },
     });
