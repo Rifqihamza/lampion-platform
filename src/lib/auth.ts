@@ -59,16 +59,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
             async authorize(credentials): Promise<User | null> {
                 // ── Debug log (hapus setelah production fix dikonfirmasi) ──
-                console.log("[AUTH] authorize called", {
-                    hasEmail: !!credentials?.email,
-                    hasPassword: !!credentials?.password,
-                    nodeEnv: env.NODE_ENV,
-                    nextauthUrl: env.NEXTAUTH_URL,
-                    hasSecret: !!env.NEXTAUTH_SECRET,
-                });
+                // console.log("[AUTH] authorize called", {
+                //     hasEmail: !!credentials?.email,
+                //     hasPassword: !!credentials?.password,
+                //     nodeEnv: env.NODE_ENV,
+                //     nextauthUrl: env.NEXTAUTH_URL,
+                //     hasSecret: !!env.NEXTAUTH_SECRET,
+                // });
 
                 if (!credentials?.email || !credentials?.password) {
-                    console.log("[AUTH] missing credentials");
                     return null;
                 }
 
@@ -77,15 +76,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         where: { email: credentials.email as string },
                     });
 
-                    console.log("[AUTH] user found:", !!user, "hasPassword:", !!user?.password);
-
                     if (!user || !user.password) {
                         throw new Error("USER_NOT_FOUND");
-                    }
-
-                    if (env.NODE_ENV === "production" && !user.emailVerified) {
-                        console.log("[AUTH] email not verified");
-                        throw new Error("EMAIL_NOT_VERIFIED");
                     }
 
                     // ── Gunakan compareSync — tidak ada bug di Node.js 22+ ──
@@ -93,8 +85,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         String(credentials.password),
                         String(user.password)
                     );
-
-                    console.log("[AUTH] password valid:", isValid);
 
                     if (!isValid) {
                         throw new Error("INVALID_PASSWORD");
