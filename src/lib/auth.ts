@@ -58,15 +58,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials): Promise<User | null> {
-                // ── Debug log (hapus setelah production fix dikonfirmasi) ──
-                // console.log("[AUTH] authorize called", {
-                //     hasEmail: !!credentials?.email,
-                //     hasPassword: !!credentials?.password,
-                //     nodeEnv: env.NODE_ENV,
-                //     nextauthUrl: env.NEXTAUTH_URL,
-                //     hasSecret: !!env.NEXTAUTH_SECRET,
-                // });
-
                 if (!credentials?.email || !credentials?.password) {
                     return null;
                 }
@@ -80,7 +71,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         throw new Error("USER_NOT_FOUND");
                     }
 
-                    // ── Gunakan compareSync — tidak ada bug di Node.js 22+ ──
                     const isValid = compareSync(
                         String(credentials.password),
                         String(user.password)
