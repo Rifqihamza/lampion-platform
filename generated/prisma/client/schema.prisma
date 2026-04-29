@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum MilestoneType {
+  VIDEO
+  ARTICLE
+  PROJECT
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  createdAt     DateTime  @default(now())
+
+  progress UserProgress[]
+  chats    AIChatHistory[]
+
+  @@index([email])
+}
+
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String   @unique
+  token   String   @unique
+  expires DateTime
+
+  @@map("verification_tokens")
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String   @unique
+  token   String   @unique
+  expires DateTime
+
+  @@map("password_reset_tokens")
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  roadmaps Roadmap[]
+}
+
+model Roadmap {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  description String
+  difficulty  Difficulty @default(BEGINNER)
+  duration    String
+  categoryId  String
+
+  category   Category    @relation(fields: [categoryId], references: [id])
+  milestones Milestone[]
+
+  createdAt DateTime @default(now())
+
+  userProgress UserProgress[]
+}
+
+model Milestone {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  order       Int
+  type        MilestoneType
+  contentUrl  String
+  roadmapId   String
+
+  roadmap  Roadmap        @relation(fields: [roadmapId], references: [id])
+  progress UserProgress[]
+
+  createdAt DateTime @default(now())
+}
+
+model UserProgress {
+  id          String  @id @default(cuid())
+  userId      String
+  roadmapId   String
+  milestoneId String
+  completed   Boolean @default(false)
+  isEnrolled  Boolean @default(true)
+
+  user      User      @relation(fields: [userId], references: [id])
+  milestone Milestone @relation(fields: [milestoneId], references: [id])
+  roadmap   Roadmap   @relation(fields: [roadmapId], references: [id])
+
+  @@unique([userId, milestoneId])
+}
+
+model AIChatHistory {
+  id          String   @id @default(cuid())
+  userId      String
+  milestoneId String?
+  question    String
+  answer      String
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}

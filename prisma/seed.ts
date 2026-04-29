@@ -1,423 +1,108 @@
-import { prisma } from "../src/lib/prisma";
-import bcrypt from 'bcryptjs'
+import "dotenv/config"; // ← Tambahkan ini di baris PERTAMA
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient, Difficulty, MilestoneType } from "../generated/prisma/client";
+
+const prisma = new PrismaClient({
+    adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+});
 
 async function main() {
-    console.log("🏮 Start seeding Lampion data...");
+    // 1. Bersihkan database (Optional - hati-hati di production)
+    await prisma.userProgress.deleteMany({});
+    await prisma.aIChatHistory.deleteMany({});
+    await prisma.milestone.deleteMany({});
+    await prisma.roadmap.deleteMany({});
+    await prisma.category.deleteMany({});
+    await prisma.user.deleteMany({});
 
-    // 1. Bersihkan Data Lama
-    // Urutan delete penting untuk menghindari FK Constraint error
-    await prisma.verificationToken.deleteMany({})
-    await prisma.passwordResetToken.deleteMany({})
-    await prisma.aIChatHistory.deleteMany({})
-    await prisma.userProgress.deleteMany({})
-    await prisma.milestone.deleteMany({})
-    await prisma.roadmap.deleteMany({})
-    await prisma.category.deleteMany({})
-    await prisma.user.deleteMany({})
-
-    // 2. Buat Demo User
-    await prisma.user.create({
+    // 2. Buat User Dummy
+    const user = await prisma.user.create({
         data: {
-            name: "Demo User",
-            email: "demo@lampion.id",
-            password: await bcrypt.hash("demo123", 12),
-            emailVerified: new Date(),
-        }
-    })
-
-    console.log("✅ Demo user created: demo@lampion.id / demo123")
-
-    // 2. Create Categories
-    const catWeb = await prisma.category.create({
-        data: { name: "Modern Web Development", slug: "web-dev" },
-    });
-    const catPhoto = await prisma.category.create({
-        data: { name: "Cinematic Photography", slug: "cinematic" },
-    });
-    const catBiz = await prisma.category.create({
-        data: { name: "Strategic Business", slug: "business" },
-    });
-
-    // 3. Create Roadmap: Web Dev (Next.js Focus)
-    await prisma.roadmap.create({
-        data: {
-            title: "Next.js 15 Fullstack Mastery",
-            slug: "nextjs-mastery",
-            description: "Belajar membangun aplikasi scalable dengan App Router dan Server Actions.",
-            difficulty: "INTERMEDIATE",
-            duration: "8 Weeks",
-            categoryId: catWeb.id,
-            milestones: {
-                create: [
-                    {
-                        title: "Next.js Fundamentals",
-                        description: "Routing, Layouts, dan Server Components.",
-                        order: 1,
-                        type: "VIDEO",
-                        contentUrl: "https://nextjs.org/docs",
-                    },
-                    {
-                        title: "Database Integration with Prisma",
-                        description: "Menghubungkan MariaDB/Postgres ke aplikasi.",
-                        order: 2,
-                        type: "ARTICLE",
-                        contentUrl: "#",
-                    },
-                ],
-            },
+            name: "John Doe",
+            email: "john@example.com",
+            image: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
         },
     });
 
-    // 4. Create Roadmap: Photography
-    await prisma.roadmap.create({
+    // 3. Buat Kategori
+    const webDev = await prisma.category.create({
         data: {
-            title: "Cinematic Lighting Guide",
-            slug: "cinematic-lighting",
-            description: "Seni menggunakan bayangan dan cahaya untuk mood filmis.",
-            difficulty: "BEGINNER",
-            duration: "4 Weeks",
-            categoryId: catPhoto.id,
-            milestones: {
-                create: [
-                    {
-                        title: "The Three Point Lighting",
-                        description: "Key light, Fill light, dan Back light.",
-                        order: 1,
-                        type: "VIDEO",
-                        contentUrl: "#",
-                    },
-                    {
-                        title: "Color Grading Basics",
-                        description: "Menggunakan LUTs untuk hasil sinematik.",
-                        order: 2,
-                        type: "ARTICLE",
-                        contentUrl: "#",
-                    },
-                ],
-            },
+            name: "Web Development",
+            slug: "web-development",
         },
     });
 
-    const catData = await prisma.category.create({
-        data: { name: "Data Science & AI", slug: "data-science" },
+    const mobileDev = await prisma.category.create({
+        data: {
+            name: "Mobile Development",
+            slug: "mobile-development",
+        },
     });
 
-    await prisma.roadmap.create({
+    // 4. Buat Roadmap: Fullstack Next.js
+    const nextjsRoadmap = await prisma.roadmap.create({
         data: {
-            title: "Python for Data Science",
-            slug: "python-data-science",
-            description: "Dasar Python untuk analisis data dan machine learning.",
-            difficulty: "BEGINNER",
-            duration: "6 Weeks",
-            categoryId: catData.id,
+            title: "Fullstack Next.js Mastery",
+            slug: "fullstack-nextjs-mastery",
+            description: "Belajar membangun aplikasi modern dengan Next.js 14, Tailwind, dan Prisma.",
+            difficulty: Difficulty.INTERMEDIATE,
+            duration: "4 Minggu",
+            categoryId: webDev.id,
             milestones: {
                 create: [
                     {
-                        title: "Python Basics",
-                        description: "Syntax, control flow, dan data structures.",
+                        title: "Pengenalan App Router",
+                        description: "Memahami struktur folder dan routing baru di Next.js.",
                         order: 1,
-                        type: "VIDEO",
-                        contentUrl: "https://docs.python.org/3/tutorial/",
+                        type: MilestoneType.VIDEO,
+                        contentUrl: "https://youtube.com/watch?v=example1",
                     },
                     {
-                        title: "Data Analysis with Pandas",
-                        description: "Manipulasi data tabular dengan Pandas.",
+                        title: "Server Components vs Client Components",
+                        description: "Kapan menggunakan 'use client' dan manfaat rendering di server.",
                         order: 2,
-                        type: "ARTICLE",
-                        contentUrl: "#",
+                        type: MilestoneType.ARTICLE,
+                        contentUrl: "https://nextjs.org/docs/server-components",
                     },
                     {
-                        title: "Intro to Machine Learning",
-                        description: "Konsep supervised vs unsupervised learning.",
+                        title: "Project: Dashboard Sederhana",
+                        description: "Membangun dashboard CRUD dengan database PostgreSQL.",
                         order: 3,
-                        type: "VIDEO",
-                        contentUrl: "#",
+                        type: MilestoneType.PROJECT,
+                        contentUrl: "https://github.com/example/project-repo",
                     },
                 ],
             },
         },
-    });
-
-    // 6. Create Roadmap: Mobile Development
-    const catMobile = await prisma.category.create({
-        data: { name: "Mobile Development", slug: "mobile-dev" },
-    });
-
-    await prisma.roadmap.create({
-        data: {
-            title: "React Native Essentials",
-            slug: "react-native-essentials",
-            description: "Membangun aplikasi cross-platform dengan React Native dan Expo.",
-            difficulty: "INTERMEDIATE",
-            duration: "5 Weeks",
-            categoryId: catMobile.id,
-            milestones: {
-                create: [
-                    {
-                        title: "React Native Basics",
-                        description: "Komponen, props, dan state.",
-                        order: 1,
-                        type: "VIDEO",
-                        contentUrl: "https://reactnative.dev/docs/getting-started",
-                    },
-                    {
-                        title: "Navigation",
-                        description: "Menggunakan React Navigation untuk multi-screen apps.",
-                        order: 2,
-                        type: "ARTICLE",
-                        contentUrl: "#",
-                    },
-                    {
-                        title: "Expo SDK",
-                        description: "Integrasi kamera, notifikasi, dan sensor.",
-                        order: 3,
-                        type: "VIDEO",
-                        contentUrl: "#",
-                    },
-                ],
-            },
+        include: {
+            milestones: true,
         },
     });
 
-    // 7. Create Roadmap: UI/UX Design
-    const catDesign = await prisma.category.create({
-        data: { name: "UI/UX Design", slug: "ui-ux" },
-    });
+    // 5. Buat Progress User (Simulasi user sudah mulai belajar)
+    const firstMilestone = nextjsRoadmap.milestones[0];
 
-    await prisma.roadmap.create({
+    await prisma.userProgress.create({
         data: {
-            title: "Design Thinking Fundamentals",
-            slug: "design-thinking",
-            description: "Pendekatan kreatif untuk problem solving dalam desain produk.",
-            difficulty: "BEGINNER",
-            duration: "3 Weeks",
-            categoryId: catDesign.id,
-            milestones: {
-                create: [
-                    {
-                        title: "Empathize & Define",
-                        description: "Memahami user dan mendefinisikan masalah.",
-                        order: 1,
-                        type: "ARTICLE",
-                        contentUrl: "#",
-                    },
-                    {
-                        title: "Ideate & Prototype",
-                        description: "Brainstorming solusi dan membuat prototipe.",
-                        order: 2,
-                        type: "VIDEO",
-                        contentUrl: "#",
-                    },
-                    {
-                        title: "Test & Iterate",
-                        description: "Uji coba prototipe dan perbaikan berulang.",
-                        order: 3,
-                        type: "ARTICLE",
-                        contentUrl: "#",
-                    },
-                ],
-            },
+            userId: user.id,
+            roadmapId: nextjsRoadmap.id,
+            milestoneId: firstMilestone.id,
+            completed: true,
+            isEnrolled: true,
         },
     });
 
-    // 8. Create Roadmap: Cybersecurity
-    const catCyber = await prisma.category.create({
-        data: { name: "Cybersecurity", slug: "cybersecurity" },
-    });
-
-    await prisma.roadmap.create({
+    // 6. Buat Dummy Chat History
+    await prisma.aIChatHistory.create({
         data: {
-            title: "Fundamentals of Cybersecurity",
-            slug: "cybersecurity-fundamentals",
-            description: "Belajar dasar keamanan jaringan dan aplikasi.",
-            difficulty: "BEGINNER",
-            duration: "6 Weeks",
-            categoryId: catCyber.id,
-            milestones: {
-                create: [
-                    {
-                        title: "Network Security Basics",
-                        description: "Firewall, VPN, dan IDS.",
-                        order: 1,
-                        type: "VIDEO",
-                        contentUrl: "#",
-                    },
-                    {
-                        title: "Web Application Security",
-                        description: "SQL Injection, XSS, dan CSRF.",
-                        order: 2,
-                        type: "ARTICLE",
-                        contentUrl: "#",
-                    },
-                    {
-                        title: "Best Practices",
-                        description: "Password policy, enkripsi, dan patching.",
-                        order: 3,
-                        type: "VIDEO",
-                        contentUrl: "#",
-                    },
-                ],
-            },
+            userId: user.id,
+            milestoneId: firstMilestone.id,
+            question: "Apa perbedaan utama layout.js dan template.js?",
+            answer: "Layout mempertahankan state saat navigasi, sedangkan template akan membuat instance baru setiap kali rute berubah.",
         },
     });
 
-    // 9. Create Roadmap: Cloud Computing
-    const catCloud = await prisma.category.create({
-        data: { name: "Cloud Computing", slug: "cloud" },
-    });
-
-    await prisma.roadmap.create({
-        data: {
-            title: "AWS Cloud Practitioner",
-            slug: "aws-practitioner",
-            description: "Dasar-dasar AWS untuk pemula.",
-            difficulty: "BEGINNER",
-            duration: "4 Weeks",
-            categoryId: catCloud.id,
-            milestones: {
-                create: [
-                    { title: "Intro AWS", description: "Layanan utama AWS.", order: 1, type: "VIDEO", contentUrl: "#" },
-                    { title: "IAM Basics", description: "Identity & Access Management.", order: 2, type: "ARTICLE", contentUrl: "#" },
-                ],
-            },
-        },
-    });
-
-    await prisma.roadmap.create({
-        data: {
-            title: "Kubernetes Orchestration",
-            slug: "kubernetes-orchestration",
-            description: "Mengelola container dengan Kubernetes.",
-            difficulty: "INTERMEDIATE",
-            duration: "6 Weeks",
-            categoryId: catCloud.id,
-            milestones: {
-                create: [
-                    { title: "Pods & Services", description: "Dasar Kubernetes.", order: 1, type: "VIDEO", contentUrl: "#" },
-                    { title: "Deployments", description: "Strategi deployment.", order: 2, type: "ARTICLE", contentUrl: "#" },
-                ],
-            },
-        },
-    });
-
-    // 10. Create Roadmap: DevOps
-    const catDevOps = await prisma.category.create({
-        data: { name: "DevOps", slug: "devops" },
-    });
-
-    await prisma.roadmap.create({
-        data: {
-            title: "CI/CD with GitHub Actions",
-            slug: "ci-cd-github",
-            description: "Automasi pipeline dengan GitHub Actions.",
-            difficulty: "INTERMEDIATE",
-            duration: "5 Weeks",
-            categoryId: catDevOps.id,
-            milestones: {
-                create: [
-                    { title: "Intro CI/CD", description: "Konsep dasar.", order: 1, type: "ARTICLE", contentUrl: "#" },
-                    { title: "GitHub Actions Basics", description: "Workflow YAML.", order: 2, type: "VIDEO", contentUrl: "#" },
-                ],
-            },
-        },
-    });
-
-    await prisma.roadmap.create({
-        data: {
-            title: "Docker Mastery",
-            slug: "docker-mastery",
-            description: "Belajar containerization dengan Docker.",
-            difficulty: "BEGINNER",
-            duration: "4 Weeks",
-            categoryId: catDevOps.id,
-            milestones: {
-                create: [
-                    { title: "Docker Basics", description: "Image & Container.", order: 1, type: "VIDEO", contentUrl: "#" },
-                    { title: "Docker Compose", description: "Multi-container apps.", order: 2, type: "ARTICLE", contentUrl: "#" },
-                ],
-            },
-        },
-    });
-
-    // 11. Create Roadmap: Game Development
-    const catGame = await prisma.category.create({
-        data: { name: "Game Development", slug: "game-dev" },
-    });
-
-    await prisma.roadmap.create({
-        data: {
-            title: "Unity 3D Basics",
-            slug: "unity-basics",
-            description: "Membangun game 3D dengan Unity.",
-            difficulty: "BEGINNER",
-            duration: "6 Weeks",
-            categoryId: catGame.id,
-            milestones: {
-                create: [
-                    { title: "Unity Editor", description: "Navigasi editor.", order: 1, type: "VIDEO", contentUrl: "#" },
-                    { title: "Physics & Colliders", description: "Dasar fisika game.", order: 2, type: "ARTICLE", contentUrl: "#" },
-                ],
-            },
-        },
-    });
-
-    await prisma.roadmap.create({
-        data: {
-            title: "Unreal Engine Advanced",
-            slug: "unreal-advanced",
-            description: "Game development dengan Unreal Engine.",
-            difficulty: "ADVANCED",
-            duration: "8 Weeks",
-            categoryId: catGame.id,
-            milestones: {
-                create: [
-                    { title: "Blueprints", description: "Visual scripting.", order: 1, type: "VIDEO", contentUrl: "#" },
-                    { title: "C++ Integration", description: "Custom logic.", order: 2, type: "ARTICLE", contentUrl: "#" },
-                ],
-            },
-        },
-    });
-
-    // 12. Create Roadmap: Blockchain
-    const catBlockchain = await prisma.category.create({
-        data: { name: "Blockchain", slug: "blockchain" },
-    });
-
-    await prisma.roadmap.create({
-        data: {
-            title: "Ethereum Smart Contracts",
-            slug: "ethereum-smart-contracts",
-            description: "Belajar Solidity untuk smart contract.",
-            difficulty: "INTERMEDIATE",
-            duration: "5 Weeks",
-            categoryId: catBlockchain.id,
-            milestones: {
-                create: [
-                    { title: "Solidity Basics", description: "Syntax & struktur.", order: 1, type: "VIDEO", contentUrl: "#" },
-                    { title: "Deploy Contracts", description: "Menggunakan Remix.", order: 2, type: "ARTICLE", contentUrl: "#" },
-                ],
-            },
-        },
-    });
-
-    await prisma.roadmap.create({
-        data: {
-            title: "Web3 dApp Development",
-            slug: "web3-dapp",
-            description: "Membangun aplikasi terdesentralisasi.",
-            difficulty: "ADVANCED",
-            duration: "7 Weeks",
-            categoryId: catBlockchain.id,
-            milestones: {
-                create: [
-                    { title: "Wallet Integration", description: "Metamask & Web3.js.", order: 1, type: "VIDEO", contentUrl: "#" },
-                    { title: "Smart Contract Interaction", description: "Call & transact.", order: 2, type: "ARTICLE", contentUrl: "#" },
-                ],
-            },
-        },
-    });
-
-    console.log("✅ Seed finished: Lampion is now enlightened!");
+    console.log("✅ Seeding database berhasil!");
 }
 
 main()
