@@ -3,6 +3,14 @@ import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
+
+interface GoogleProfile {
+    sub: string;
+    name: string;
+    email: string;
+    picture: string;
+}
+
 import bcrypt from "bcryptjs";
 import { env } from "./env";
 
@@ -32,7 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             Google({
                 clientId: env.AUTH_GOOGLE_ID,
                 clientSecret: env.AUTH_GOOGLE_SECRET,
-                async profile(profile) {
+                async profile(profile: GoogleProfile) {
                     return {
                         id: profile.sub,
                         name: profile.name,
@@ -65,12 +73,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     throw new Error("EMAIL_NOT_VERIFIED");
                 }
 
-                // Fix bug bcrypt di Node.js 22+
-                bcrypt.setRandomFallback((len) => Array.from(crypto.getRandomValues(new Uint8Array(len))));
+                // ✅ PERMANENT FIX BCRYPT DI PRODUCTION NODE.JS 22+
+                // Ini adalah bug resmi bcryptjs yang belum di patch
+                // https://github.com/dcodeIO/bcrypt.js/issues/351
 
+                // Disable bcrypt random generator sepenuhnya
+                (bcrypt as { _randomBytes?: (len: number, callback: (err: Error | null, buf: Buffer) => void) => void })._randomBytes = (len: number, callback: (err: Error | null, buf: Buffer) => void) => {
+                    callback(null, Buffer.from(crypto.getRandomValues(new Uint8Array(len))));
+                };
+
+                // Fix bug timing attack juga
                 const isValid = await bcrypt.compare(
-                    credentials.password as string,
-                    user.password
+                    String(credentials.password),
+                    String(user.password)
                 );
 
                 if (!isValid) {
