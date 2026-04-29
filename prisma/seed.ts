@@ -1,4 +1,4 @@
-import "dotenv/config"; // ← Tambahkan ini di baris PERTAMA
+import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, Difficulty, MilestoneType } from "../generated/prisma/client";
 
@@ -7,25 +7,14 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-    // 1. Bersihkan database (Optional - hati-hati di production)
+    // 1. Bersihkan database
     await prisma.userProgress.deleteMany({});
     await prisma.aIChatHistory.deleteMany({});
     await prisma.milestone.deleteMany({});
     await prisma.roadmap.deleteMany({});
     await prisma.category.deleteMany({});
-    await prisma.user.deleteMany({});
 
-    // 2. Buat User Dummy
-    const user = await prisma.user.create({
-        data: {
-            name: "John Doe",
-            email: "john@example.com",
-            password: "1tm1tr4101101",
-            image: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
-        },
-    });
-
-    // 3. Buat Kategori
+    // 2. Buat Kategori
     const webDev = await prisma.category.create({
         data: {
             name: "Web Development",
@@ -33,15 +22,15 @@ async function main() {
         },
     });
 
-    const mobileDev = await prisma.category.create({
+    await prisma.category.create({
         data: {
             name: "Mobile Development",
             slug: "mobile-development",
         },
     });
 
-    // 4. Buat Roadmap: Fullstack Next.js
-    const nextjsRoadmap = await prisma.roadmap.create({
+    // 3. Buat Roadmap: Fullstack Next.js
+    await prisma.roadmap.create({
         data: {
             title: "Fullstack Next.js Mastery",
             slug: "fullstack-nextjs-mastery",
@@ -74,32 +63,6 @@ async function main() {
                     },
                 ],
             },
-        },
-        include: {
-            milestones: true,
-        },
-    });
-
-    // 5. Buat Progress User (Simulasi user sudah mulai belajar)
-    const firstMilestone = nextjsRoadmap.milestones[0];
-
-    await prisma.userProgress.create({
-        data: {
-            userId: user.id,
-            roadmapId: nextjsRoadmap.id,
-            milestoneId: firstMilestone.id,
-            completed: true,
-            isEnrolled: true,
-        },
-    });
-
-    // 6. Buat Dummy Chat History
-    await prisma.aIChatHistory.create({
-        data: {
-            userId: user.id,
-            milestoneId: firstMilestone.id,
-            question: "Apa perbedaan utama layout.js dan template.js?",
-            answer: "Layout mempertahankan state saat navigasi, sedangkan template akan membuat instance baru setiap kali rute berubah.",
         },
     });
 
