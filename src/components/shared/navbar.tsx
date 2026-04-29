@@ -47,6 +47,12 @@ export default async function Navbar() {
                         Timeline
                         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full duration-300"></span>
                     </Link>
+                    <Link
+                        href="/#impactProjection-section"
+                        className="hover:text-primary transition-colors relative group">
+                        Impact
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full duration-300"></span>
+                    </Link>
                     {session ? (
                         <Link
                             href="/dashboard"
